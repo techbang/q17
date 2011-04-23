@@ -3,7 +3,8 @@ class ApplicationController < ActionController::Base
   include Facebooker2::Rails::Controller
   include Techbang::Authentication::System
   
-  
+  include ActionController::MobileFu::InstanceMethods
+  helper_method :is_mobile_device?
   
   use_zomet
   

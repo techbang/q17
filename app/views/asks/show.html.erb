@@ -118,7 +118,7 @@
         </div>
       <% end %>
       <script type="text/javascript">
-        $("#answer_body").qeditor({'is_mobile_device': 'false' });
+        $("#answer_body").qeditor({'is_mobile_device': <%= is_mobile_device? ? 'true' : 'false' %>});
       </script>
     </div>
   <% end %>
