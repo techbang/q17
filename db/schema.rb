@@ -10,7 +10,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110423045120) do
+ActiveRecord::Schema.define(:version => 20110423045837) do
+
+  create_table "notifications", :force => true do |t|
+    t.boolean  "has_read"
+    t.integer  "target_id"
+    t.string   "action"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "profiles", :force => true do |t|
     t.integer  "user_id"
