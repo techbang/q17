@@ -93,6 +93,17 @@ class AsksController < ApplicationController
   end
   
   
+  def spam 
+    size = 1
+    if(Setting.admin_emails.include?(current_user.email))
+      size = Setting.ask_spam_max
+    end
+    count = @ask.spam(current_user.id,size)
+    render :text => count
+  end
+
+
+  
   protected
   
   def find_ask
