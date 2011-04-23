@@ -3,6 +3,9 @@ Q17::Application.routes.draw do
   match "/logout" => "sessions#destroy", :as => :logout
   match "/login"  => "sessions#new", :as => :login
   
+  #TODO :need to be refactor
+  match "/update_in_place" => "pages#update_in_place"
+  
   match "/followed" => "home#followed"
   match "/recommended" => "home#recommended"
   match "/muted" => "home#muted"
