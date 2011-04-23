@@ -3,29 +3,33 @@ class User < ActiveRecord::Base
 
   attr_accessible :login, :name, :nickname, :email, :fb_user_id, :email_hash , :avatar_file_name , :profile_attributes
   has_many :notifications
-  
+
   has_many :followed_ask_ships
   has_many :followed_asks, :through => :followed_ask_ships, :source => :ask
-  
+
   def ask_followed?(ask)
     # Rails.logger.info { "user: #{self.inspect}" }
     # Rails.logger.info { "asks: #{self.followed_asks.inspect}" }
     # Rails.logger.info { "ask: #{ask.inspect}" }
     self.followed_asks.include?(ask)
   end
-  
+
   # 不感兴趣问题
   def ask_muted?(ask_id)
     self.muted_ask_ids.include?(ask_id)
   end
-  
+
   def mute_ask(ask_id)
-     self.muted_ask_ids ||= []
-     return if self.muted_ask_ids.index(ask_id)
-     self.muted_ask_ids << ask_id
-     self.save
-   end
+    self.muted_ask_ids ||= []
+    return if self.muted_ask_ids.index(ask_id)
+    self.muted_ask_ids << ask_id
+    self.save
+  end
   
+  def suggest_items
+  #  return UserSuggestItem.gets(self.id, :limit => 6)
+  end
+
 end
 
 # == Schema Information
@@ -47,4 +51,3 @@ end
 #  created_at       :datetime
 #  updated_at       :datetime
 #
-
