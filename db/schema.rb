@@ -10,7 +10,24 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110423045837) do
+ActiveRecord::Schema.define(:version => 20110423054104) do
+
+  create_table "asks", :force => true do |t|
+    t.string   "title"
+    t.text     "body"
+    t.datetime "answered_at"
+    t.integer  "answers_count",   :default => 0
+    t.integer  "comments_count",  :default => 0
+    t.string   "topic"
+    t.integer  "spams_count",     :default => 0
+    t.string   "spam_voter_ids"
+    t.integer  "views_count",     :default => 0
+    t.datetime "last_updated_at"
+    t.integer  "redirect_ask_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "notifications", :force => true do |t|
     t.boolean  "has_read"
@@ -69,6 +86,7 @@ ActiveRecord::Schema.define(:version => 20110423045837) do
     t.boolean  "is_agreed"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "asks_count",                      :default => 0
   end
 
   add_index "users", ["fb_user_id"], :name => "index_users_on_fb_user_id"

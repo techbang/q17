@@ -9,6 +9,23 @@ Q17::Application.routes.draw do
 
   resources :user_registrations, :controller => "registrations"
   
+  resources :asks do
+    member do
+      get "spam"
+      get "follow"
+      get "unfollow"
+      get "mute"
+      get "unmute"
+      post "answer"
+      post "update_topic"
+      get "update_topic"
+      get "redirect"
+      get "invite_to_answer"
+      get "share"
+      post "share"
+    end
+  end
+  
   # Sample of regular route:
   #   match 'products/:id' => 'catalog#view'
   # Keep in mind you can assign values other than :controller and :action

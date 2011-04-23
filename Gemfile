@@ -13,6 +13,7 @@ gem "rubycas-client", :require => "casclient"
 gem "techbang-authentication", :git => "git@github.com:techbang/techbang-authentication.git", :tag => "0.0.5"
 gem "paperclip"
 
+
 # Use unicorn as the web server
 # gem 'unicorn'
 
@@ -35,3 +36,5 @@ gem "paperclip"
 # group :development, :test do
 #   gem 'webrat'
 # end
+
+gem "annotate"
