@@ -9,6 +9,7 @@ class CreateUsers < ActiveRecord::Migration
       t.string     :email_hash
       t.string     :avatar_file_name
       t.integer    :role_id
+      t.boolean    :is_agreed
       t.timestamps
     end
 
