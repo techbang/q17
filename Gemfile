@@ -6,6 +6,13 @@ gem "settingslogic"
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
+# Auth
+gem "json_pure"
+gem "facebooker2", ">= 0.0.10"
+gem "rubycas-client", :require => "casclient"
+gem "techbang-authentication", :git => "git@github.com:techbang/techbang-authentication.git", :tag => "0.0.5"
+
+
 # Use unicorn as the web server
 # gem 'unicorn'
 

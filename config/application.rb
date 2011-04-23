@@ -40,3 +40,5 @@ module Q17
     config.filter_parameters += [:password]
   end
 end
+
+require "zomet"

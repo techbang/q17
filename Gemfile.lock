@@ -1,3 +1,10 @@
+GIT
+  remote: git@github.com:techbang/techbang-authentication.git
+  revision: 4a6229194ae7bd3830d4876cd7fa07335c2db09b
+  tag: 0.0.5
+  specs:
+    techbang-authentication (0.0.5)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -30,15 +37,24 @@ GEM
     activesupport (3.0.5)
     arel (2.0.9)
     builder (2.1.2)
+    crack (0.1.8)
     erubis (2.6.6)
       abstract (>= 1.0.0)
+    facebooker2 (0.0.11)
+      mogli (>= 0.0.12)
+      ruby-hmac
+    httparty (0.7.4)
+      crack (= 0.1.8)
     i18n (0.5.0)
+    json_pure (1.5.1)
     mail (2.2.17)
       activesupport (>= 2.3.6)
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.16)
+    mogli (0.0.27)
+      httparty (>= 0.4.3)
     mysql2 (0.2.7)
     polyglot (0.3.1)
     rack (1.2.2)
@@ -60,6 +76,9 @@ GEM
       rake (>= 0.8.7)
       thor (~> 0.14.4)
     rake (0.8.7)
+    ruby-hmac (0.4.0)
+    rubycas-client (2.2.1)
+      activesupport
     settingslogic (2.0.6)
     thor (0.14.6)
     treetop (1.4.9)
@@ -70,6 +89,10 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  facebooker2 (>= 0.0.10)
+  json_pure
   mysql2
   rails (= 3.0.5)
+  rubycas-client
   settingslogic
+  techbang-authentication!
