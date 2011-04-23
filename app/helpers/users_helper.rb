@@ -8,4 +8,11 @@ module UsersHelper
     url = options[:url] == true ? user_url(user.slug) : user_path(user.slug)
     raw "<a#{options[:is_notify] == true ? " onclick=\"mark_notifies_as_read(this, '#{options[:notify].id}');\"" : ""} href=\"#{url}\" class=\"user\" title=\"#{user.name}\">#{user.name}</a>"
   end
+  
+  def user_tagline_tag(user,options = {})
+    prefix = options[:prefix] || ""
+    return "" if user.tagline.blank?
+    raw "#{prefix}#{truncate(user.tagline, :length => 30)}"
+  end
+  
 end

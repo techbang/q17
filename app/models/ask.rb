@@ -35,7 +35,9 @@ class Ask < ActiveRecord::Base
   belongs_to :last_answer_user, :class_name => 'User'
   # Followers
   has_many :followed_ask_ships
-  has_many :followed_asks, :through => :followed_ask_ships, :source => :user
+  has_many :followers, :through => :followed_ask_ships, :source => :user
+  
+  has_many :topics
   
   # Comments
   has_many :comments, :conditions => {:commentable_type => "Ask"}, :foreign_key => "commentable_id", :class_name => "Comment"
@@ -72,7 +74,7 @@ class Ask < ActiveRecord::Base
   before_update :update_log
 
   def view!
-    self.inc(:views_count, 1)
+    self.class.increment_counter(:views_count, 1)
   end
 
   def send_mails

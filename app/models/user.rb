@@ -6,6 +6,11 @@ class User < ActiveRecord::Base
 
   has_many :followed_ask_ships
   has_many :followed_asks, :through => :followed_ask_ships, :source => :ask
+  
+  has_many :followed_topic_ships
+  has_many :followed_topics, :through => :followed_topic_ships, :source => :topic
+  
+  has_many :answers
 
   def ask_followed?(ask)
     # Rails.logger.info { "user: #{self.inspect}" }

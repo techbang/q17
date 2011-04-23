@@ -36,6 +36,46 @@ class AsksController < ApplicationController
     end
   end
   
+  def show
+    @ask.view!
+
+    if @ask.redirect_ask_id.present?
+      if params[:nr].blank?
+        # 转向问题
+        redirect_to ask_path(@ask.redirect_ask_id,:rf => params[:id], :nr => "1")
+        return
+      else
+        @r_ask = Ask.find(@ask.redirect_ask_id)
+      end
+    end
+
+    if params[:rf]
+      @rf_ask = Ask.find(params[:rf])
+      if @ask.redirect_ask_id.present?
+        @r_ask = Ask.find(@ask.redirect_ask_id)
+      end
+    end
+    
+    # 由于 voteable_mongoid 目前的按 votes_point 排序有问题，没投过票的无法排序
+    
+    @answers = @ask.answers.includes(:user).order("up_votes DESC,down_votes ASC,created_at ASC")
+    #@answers = @ask.answers.includes(:user).order_by(:"votes.uc".desc,:"votes.dc".asc,:"created_at".asc)
+    @answer = Answer.new
+    # TEMP_REMOVE
+    # @relation_asks = Ask.normal.any_in(:topics => @ask.topics).excludes(:id => @ask.id).limit(10).desc("$natural")
+    @relation_asks = Ask.all
+    # 被邀请回答的用户
+    # TEMP_REMOVE
+    #@invites = @ask.ask_invites.includes(:user)
+    @invites = @ask.ask_invites
+    set_seo_meta(@ask.title)
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json
+    end
+  end
+  
   protected
   
   def find_ask

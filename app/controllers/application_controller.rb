@@ -3,6 +3,8 @@ class ApplicationController < ActionController::Base
   include Facebooker2::Rails::Controller
   include Techbang::Authentication::System
   
+  
+  
   use_zomet
   
   def store_location
@@ -60,6 +62,12 @@ class ApplicationController < ActionController::Base
     end
     @meta_keywords = keywords
     @meta_description = description
+  end
+  
+  protected
+
+  def user_class
+    ::User
   end
   
 end

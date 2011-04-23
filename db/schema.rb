@@ -10,7 +10,29 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110423060735) do
+ActiveRecord::Schema.define(:version => 20110423085432) do
+
+  create_table "answers", :force => true do |t|
+    t.text     "body"
+    t.integer  "comments_count", :default => 0
+    t.integer  "spams_count",    :default => 0
+    t.integer  "spam_voter_ids"
+    t.integer  "up_votes",       :default => 0
+    t.integer  "down_votes",     :default => 0
+    t.integer  "ask_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "ask_invites", :force => true do |t|
+    t.integer  "ask_id"
+    t.integer  "user_id"
+    t.integer  "count",       :default => 0
+    t.integer  "mail_sent",   :default => 0
+    t.string   "invitor_ids"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "asks", :force => true do |t|
     t.string   "title"
@@ -25,6 +47,13 @@ ActiveRecord::Schema.define(:version => 20110423060735) do
     t.datetime "last_updated_at"
     t.integer  "redirect_ask_id"
     t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "follow_topic_ships", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "topic_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -79,6 +108,16 @@ ActiveRecord::Schema.define(:version => 20110423060735) do
   add_index "profiles", ["job"], :name => "index_profiles_on_job"
   add_index "profiles", ["zip_code"], :name => "index_profiles_on_zip_code"
 
+  create_table "topics", :force => true do |t|
+    t.string   "name"
+    t.text     "summary"
+    t.text     "conver"
+    t.integer  "asks_count", :default => 0
+    t.integer  "ask_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "users", :force => true do |t|
     t.string   "login",            :limit => 40
     t.string   "name",             :limit => 100, :default => ""
@@ -95,6 +134,7 @@ ActiveRecord::Schema.define(:version => 20110423060735) do
     t.datetime "updated_at"
     t.integer  "asks_count",                      :default => 0
     t.string   "muted_ask_ids"
+    t.string   "tagline"
   end
 
   add_index "users", ["fb_user_id"], :name => "index_users_on_fb_user_id"
