@@ -7,7 +7,7 @@ module AsksHelper
       topics = topics[0,limit]
     end
     for topic in topics
-      html << "<a class=\"topic\" href=\"/topics/#{topic}\">#{topic}</a>"
+      html << "<a class=\"topic\" href=\"/topics/#{topic.name}\">#{topic.name}</a>"
     end
     return raw html.join("")
   end

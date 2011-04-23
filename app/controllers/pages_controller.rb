@@ -41,4 +41,15 @@ class PagesController < ApplicationController
       render "index"
     end
   end
+  
+  def recommended
+    @per_page = 20
+    @asks = current_user ? Ask.recommended_for_user(current_user) : Ask.normal
+    @asks = @asks.includes(:user,:last_answer,:last_answer_user,:topics).exclude_ids(current_user.muted_ask_ids).order("answers_count,answered_at DESC").paginate(:page => params[:page], :per_page => @per_page)
+
+    if params[:format] == "js"
+      render "/asks/recommended.js"
+    end
+  end
+  
 end

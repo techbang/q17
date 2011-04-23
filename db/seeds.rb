@@ -19,3 +19,7 @@ ask = Ask.new(:title => "ask-title-1", :body => "ask-body-1")
 ask.user_id = 1
 ask.current_user_id = 1
 ask.save!
+
+topic = Topic.new(:name => "topic-1", :summary => "summary-1")
+topic.ask_id = 1
+topic.save

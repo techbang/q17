@@ -5,7 +5,6 @@ class Topic < ActiveRecord::Base
   #field :name
   #field :summary
   #field :cover
-  #mount_uploader :cover, CoverUploader
 
   #field :asks_count, :type => Integer, :default => 0
 
@@ -15,7 +14,10 @@ class Topic < ActiveRecord::Base
   # Followers
   
   has_many :followed_ask_ships
-  has_many :followed_asks, :through => :followed_ask_ships, :source => :user
+  has_many :followed_asks, :through => :followed_ask_ships, :source => :ask
+  
+  has_many :followed_topic_ships
+  has_many :followers, :through => :followed_topic_ships, :source => :user
   
   #references_and_referenced_in_many :followers, :stored_as => :array, :inverse_of => :followed_topics, :class_name => "User"
 
@@ -23,6 +25,10 @@ class Topic < ActiveRecord::Base
   validates_uniqueness_of :name, :case_insensitive => true
 
   # 以下两个方法是给 redis search index 用
+  
+  def to_param
+    "#{name}"
+  end
   def followers_count
     self.follower_ids.count
   end
@@ -45,8 +51,8 @@ class Topic < ActiveRecord::Base
   #             :attribute_types => {:cover_small => String, :followers_count => Integer},
   #             :options => {} )
 
-  redis_search_index(:title_field => :name,
-                     :ext_fields => [:followers_count,:cover_small])
+  #redis_search_index(:title_field => :name,
+  #                   :ext_fields => [:followers_count,:cover_small])
 
   # 敏感词验证
   before_validation :check_spam_words
@@ -97,7 +103,9 @@ class Topic < ActiveRecord::Base
   end
 
   def self.find_by_name(name)
-    find(:first,:conditions => {:name => /^#{name.downcase}$/i})
+    #TODO : #4423
+    #find(:first,:conditions => {:name => /^#{name.downcase}$/i})
+    find(:first,:conditions => ["name LIKE ?", name.downcase] )
   end
 
   def self.search_name(name, options = {})

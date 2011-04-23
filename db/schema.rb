@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110423114815) do
+ActiveRecord::Schema.define(:version => 20110423115532) do
 
   create_table "answered_ask_ships", :force => true do |t|
     t.integer  "user_id"
@@ -70,16 +70,16 @@ ActiveRecord::Schema.define(:version => 20110423114815) do
     t.datetime "updated_at"
   end
 
-  create_table "follow_topic_ships", :force => true do |t|
+  create_table "followed_ask_ships", :force => true do |t|
     t.integer  "user_id"
-    t.integer  "topic_id"
+    t.integer  "ask_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "followed_ask_ships", :force => true do |t|
+  create_table "followed_topic_ships", :force => true do |t|
     t.integer  "user_id"
-    t.integer  "ask_id"
+    t.integer  "topic_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -140,6 +140,13 @@ ActiveRecord::Schema.define(:version => 20110423114815) do
     t.text     "conver"
     t.integer  "asks_count", :default => 0
     t.integer  "ask_id"
+    t.string   "cover"
+    t.string   "string"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "user_suggest_items", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
   end

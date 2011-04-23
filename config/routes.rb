@@ -7,7 +7,7 @@ Q17::Application.routes.draw do
   match "/update_in_place" => "pages#update_in_place"
   
   match "/followed" => "pages#followed"
-  match "/recommended" => "home#recommended"
+  match "/recommended" => "pages#recommended"
   match "/muted" => "home#muted"
   match "/doing" => "logs#index"
   
@@ -41,6 +41,13 @@ Q17::Application.routes.draw do
       get "vote"
       get "spam"
       get "thank"
+    end
+  end
+  
+  resources :topics, :constraints => { :id => /[a-zA-Z\w\s\.%\-_]+/ } do
+    member do
+      get "follow"
+      get "unfollow"
     end
   end
   

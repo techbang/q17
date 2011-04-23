@@ -49,6 +49,10 @@ class User < ActiveRecord::Base
     insert_follow_log("FOLLOW_ASK", ask)
   end
   
+  def topic_followed?(topic)
+    self.followed_topics.include?(topic)
+  end
+  
   protected
   
     def insert_follow_log(action, item, parent_item = nil)

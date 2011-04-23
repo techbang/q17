@@ -59,8 +59,10 @@ class Ask < ActiveRecord::Base
   scope :exclude_ids, lambda { |ids|
     where(['id NOT IN (?)', ids]) if ids.any?
   }
-  
-  scope :only_ids, lambda { |id_array| any_in("_id" => (id_array ||= [])) }
+  scope :only_ids, lambda { |ids|
+    where(['id IN (?)', ids]) if ids.any?
+  }
+
   # 问我的问题
   scope :asked_to, lambda { |to_user_id| where(:to_user_id => to_user_id) }
 
@@ -211,6 +213,14 @@ class Ask < ActiveRecord::Base
   def redirect_cancel
     self.redirect_ask_id = nil
     self.save
+  end
+  
+  
+  def self.recommended_for_user(current_user)
+    #Ask.normal.any_of({:topics.in => current_user.followed_topics.map{|t| t.name}}).not_in(:follower_ids => [current_user.id]).and(:answers_count.lt => 1) 
+    # TODO #4421
+    
+    Ask.normal
   end
 
   protected

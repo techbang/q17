@@ -17,6 +17,14 @@ gem "will_paginate"
 gem "resque"
 gem "resque_mailer"
 
+# 图片上传
+#gem 'carrierwave'
+#gem 'mini_magick'
+
+# 表单
+gem 'simple_form', "1.3.1"
+
+
 # Use unicorn as the web server
 # gem 'unicorn'
 
