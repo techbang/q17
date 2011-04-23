@@ -26,4 +26,19 @@ class PagesController < ApplicationController
       render :text => object.errors.full_messages.join("\n"), :status => 422
     end
   end
+  
+  
+  
+  def followed
+    @per_page = 20
+    @asks = current_user ? current_user.followed_asks.normal : Ask.normal
+    current_user_muted_ask_ids = current_user.muted_ask_ids || []
+    @asks = @asks.includes(:user,:last_answer,:last_answer_user,:topics).exclude_ids(current_user_muted_ask_ids).order("answered_at, id DESC").paginate(:page => params[:page], :per_page => @per_page)
+
+    if params[:format] == "js"
+      render "/asks/index.js"
+    else
+      render "index"
+    end
+  end
 end

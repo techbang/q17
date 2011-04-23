@@ -56,7 +56,12 @@ class Ask < ActiveRecord::Base
   scope :recent, :order => "created_at DESC"
   
   # 除开一些 id，如用到 mute 的问题，传入用户的 muted_ask_ids
-  scope :exclude_ids, lambda { |id_array| not_in("_id" => (id_array ||= [])) }
+  #scope :exclude_ids, lambda { |id_array| not_in("_id" => (id_array ||= [])) }
+  #scope :exclude_ids,lambda { |id_array| where("id not in(?)", id_array ||= []) }
+  
+  scope :exclude_ids, lambda { |ids|
+    where(['id NOT IN (?)', ids]) if ids.any?
+  }
   scope :only_ids, lambda { |id_array| any_in("_id" => (id_array ||= [])) }
   # 问我的问题
   scope :asked_to, lambda { |to_user_id| where(:to_user_id => to_user_id) }
