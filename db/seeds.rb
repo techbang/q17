@@ -6,4 +6,16 @@
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Daley', :city => cities.first)
 
-ask = Ask.create(:title => "ask-title-1", :body => "ask-body-1")
+TEST_ACCOUNT = ["xdite"]
+puts "create user"
+TEST_ACCOUNT.each do |account|
+  u = User.create(:login => account, :name => account, :nickname => account, :slug => account )
+  u.save
+end
+
+
+
+ask = Ask.new(:title => "ask-title-1", :body => "ask-body-1")
+ask.user_id = 1
+ask.current_user_id = 1
+ask.save!
