@@ -56,6 +56,9 @@ GEM
     mogli (0.0.27)
       httparty (>= 0.4.3)
     mysql2 (0.2.7)
+    paperclip (2.3.10)
+      activerecord (>= 2.3.0)
+      activesupport (>= 2.3.2)
     polyglot (0.3.1)
     rack (1.2.2)
     rack-mount (0.6.14)
@@ -92,6 +95,7 @@ DEPENDENCIES
   facebooker2 (>= 0.0.10)
   json_pure
   mysql2
+  paperclip
   rails (= 3.0.5)
   rubycas-client
   settingslogic

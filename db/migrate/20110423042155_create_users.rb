@@ -4,6 +4,8 @@ class CreateUsers < ActiveRecord::Migration
       t.string     :login,            :limit => 40
       t.string     :name,             :limit => 100, :default => '', :null => true
       t.string     :nickname,         :limit => 40
+      t.string     :slug,             :limit => 40
+      t.string     :sex
       t.string     :email,            :limit => 100
       t.integer    :fb_user_id,       :limit => 20
       t.string     :email_hash
