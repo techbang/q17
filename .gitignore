@@ -1,5 +1,20 @@
 .bundle
+Gemfile.lock
 db/*.sqlite3
 log/*.log
+log/*.pid
 tmp/
-database.yml
+config/*.yml
+public/javascripts/cached_*
+public/stylesheets/cached_*
+public/google*.html
+public/about.html
+db/sphinx
+db/dict/*.lib
+db/dict/thesaurus.txt
+
+#以bundle install --path vendor/bundle方式安装，不影响开发者现有gems环境
+vendor/bundle
+
+db/sphinx
+development.*
