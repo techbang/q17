@@ -73,6 +73,10 @@ class Answer < ActiveRecord::Base
     insert_action_log("NEW")
   end
   
+  def votes_count
+    return up_votes_count + down_votes_count
+  end
+  
   protected
   
     def insert_action_log(action)
