@@ -13,6 +13,9 @@ class User < ActiveRecord::Base
   has_many :followed_topic_ships
   has_many :followed_topics, :through => :followed_topic_ships, :source => :topic
   
+  has_many :muted_ask_ships
+  has_many :muted_asks, :through => :muted_ask_ships, :source => :ask
+  
   has_many :answers
 
   def ask_followed?(ask)
@@ -27,12 +30,13 @@ class User < ActiveRecord::Base
     self.muted_ask_ids.include?(ask_id)
   end
 
-  def mute_ask(ask_id)
-    self.muted_ask_ids ||= []
-    return if self.muted_ask_ids.index(ask_id)
-    self.muted_ask_ids << ask_id
-    self.save
-  end
+ # 遇到再處理
+ # def mute_ask(ask_id)
+ #   self.muted_ask_ids ||= []
+ #   return if self.muted_ask_ids.index(ask_id)
+ #   self.muted_ask_ids << ask_id
+ #   self.save
+ # end
   
   def suggest_items
     return UserSuggestItem.gets(self.id, :limit => 6)
