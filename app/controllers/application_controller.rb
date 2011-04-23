@@ -20,7 +20,12 @@ class ApplicationController < ActionController::Base
     format = options[:format] || :html
     format = format.to_s
     if format == "html"
-      authenticate_user!
+      #authenticate_user!
+      if current_user.blank?
+        redirect_to login_path
+        return false
+      end
+      
     elsif format == "json"
       if current_user.blank?
         render :json => { :success => false, :msg => "你还没有登陆。" }
@@ -63,6 +68,38 @@ class ApplicationController < ActionController::Base
     @meta_keywords = keywords
     @meta_description = description
   end
+  
+  def tag_options(options, escape = true)
+    unless options.blank?
+      attrs = []
+      options.each_pair do |key, value|
+        if BOOLEAN_ATTRIBUTES.include?(key)
+          attrs << %(#{key}="#{key}") if value
+        elsif !value.nil?
+          final_value = value.is_a?(Array) ? value.join(" ") : value
+          final_value = html_escape(final_value) if escape
+          attrs << %(#{key}="#{final_value}")
+        end
+      end
+      " #{attrs.sort * ' '}".html_safe unless attrs.empty?
+    end
+  end
+  
+  def tag(name, options = nil, open = false, escape = true)
+    "<#{name}#{tag_options(options, escape) if options}#{open ? ">" : " />"}".html_safe
+  end
+  
+  
+  def simple_format(text, html_options={}, options={})
+    text = ''.html_safe if text.nil?
+    start_tag = tag('p', html_options, true)
+    text.gsub!(/\r\n?/, "\n")                    # \r\n and \r -> \n
+    text.gsub!(/\n\n+/, "</p><br />#{start_tag}")  # 2+ newline  -> paragraph
+    text.gsub!(/([^\n]\n)(?=[^\n])/, '\1<br />') # 1 newline   -> br
+    text.insert 0, start_tag
+    text.html_safe.safe_concat("</p>")
+  end
+  
   
   protected
 

@@ -10,16 +10,24 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110423085432) do
+ActiveRecord::Schema.define(:version => 20110423095844) do
+
+  create_table "answered_ask_ships", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "ask_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "answers", :force => true do |t|
     t.text     "body"
-    t.integer  "comments_count", :default => 0
-    t.integer  "spams_count",    :default => 0
+    t.integer  "comments_count",   :default => 0
+    t.integer  "spams_count",      :default => 0
     t.integer  "spam_voter_ids"
-    t.integer  "up_votes",       :default => 0
-    t.integer  "down_votes",     :default => 0
+    t.integer  "up_votes_count",   :default => 0
+    t.integer  "down_votes_count", :default => 0
     t.integer  "ask_id"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -38,15 +46,17 @@ ActiveRecord::Schema.define(:version => 20110423085432) do
     t.string   "title"
     t.text     "body"
     t.datetime "answered_at"
-    t.integer  "answers_count",   :default => 0
-    t.integer  "comments_count",  :default => 0
+    t.integer  "answers_count",       :default => 0
+    t.integer  "comments_count",      :default => 0
     t.string   "topic"
-    t.integer  "spams_count",     :default => 0
+    t.integer  "spams_count",         :default => 0
     t.string   "spam_voter_ids"
-    t.integer  "views_count",     :default => 0
+    t.integer  "views_count",         :default => 0
     t.datetime "last_updated_at"
     t.integer  "redirect_ask_id"
     t.integer  "user_id"
+    t.integer  "last_answer_user_id"
+    t.integer  "last_answer_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -133,6 +143,7 @@ ActiveRecord::Schema.define(:version => 20110423085432) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "asks_count",                      :default => 0
+    t.integer  "answers_count",                   :default => 0
     t.string   "muted_ask_ids"
     t.string   "tagline"
   end

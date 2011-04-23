@@ -14,6 +14,8 @@ gem "techbang-authentication", :git => "git@github.com:techbang/techbang-authent
 gem "paperclip"
 
 gem "will_paginate"
+gem "resque"
+gem "resque_mailer"
 
 # Use unicorn as the web server
 # gem 'unicorn'

@@ -7,6 +7,9 @@ class User < ActiveRecord::Base
   has_many :followed_ask_ships
   has_many :followed_asks, :through => :followed_ask_ships, :source => :ask
   
+  has_many :answered_ask_ships
+  has_many :answered_asks, :through => :answered_ask_ships, :source => :ask
+  
   has_many :followed_topic_ships
   has_many :followed_topics, :through => :followed_topic_ships, :source => :topic
   
@@ -32,9 +35,39 @@ class User < ActiveRecord::Base
   end
   
   def suggest_items
-  #  return UserSuggestItem.gets(self.id, :limit => 6)
+    return UserSuggestItem.gets(self.id, :limit => 6)
   end
-
+  
+  def follow_ask(ask)
+    ask.followers << self
+    ask.save
+    
+    insert_follow_log("FOLLOW_ASK", ask)
+  end
+  
+  protected
+  
+    def insert_follow_log(action, item, parent_item = nil)
+      begin
+        log = UserLog.new
+        log.user_id = self.id
+        log.title = self.name
+        log.target_id = item.id
+        log.action = action
+        if parent_item.blank?
+          log.target_parent_id = item.id
+          log.target_parent_title = item.is_a?(Ask) ? item.title : item.name
+        else
+          log.target_parent_id = parent_item.id
+          log.target_parent_title = parent_item.title
+        end
+        log.diff = ""
+        log.save
+      rescue Exception => e
+        
+      end
+    end
+    
 end
 
 # == Schema Information

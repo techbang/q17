@@ -13,6 +13,8 @@ class CreateAsks < ActiveRecord::Migration
       t.datetime  :last_updated_at
       t.integer   :redirect_ask_id
       t.integer   :user_id
+      t.integer   :last_answer_user_id
+      t.integer   :last_answer_id
       t.timestamps
     end
   end

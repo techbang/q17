@@ -1,6 +1,7 @@
 class UserCount < ActiveRecord::Migration
   def self.up
     add_column :users, :asks_count , :integer ,:default => 0
+    add_column :users, :answers_count, :integer, :default => 0
     add_column :users, :muted_ask_ids, :string
     add_column :users, :tagline, :string
     

@@ -1,5 +1,4 @@
 class AsksController < ApplicationController
-  
   before_filter :require_user, :only => [:answer,:update_topic]
   before_filter :require_user_js, :only => [:answer,:invite_to_answer]
   before_filter :require_user_text, :only => [:update_topic,:redirect,:spam, :mute, :unmute, :follow, :unfollow]
@@ -58,7 +57,7 @@ class AsksController < ApplicationController
     
     # 由于 voteable_mongoid 目前的按 votes_point 排序有问题，没投过票的无法排序
     
-    @answers = @ask.answers.includes(:user).order("up_votes DESC,down_votes ASC,created_at ASC")
+    @answers = @ask.answers.includes(:user).order("up_votes_count DESC,down_votes_count ASC,created_at ASC")
     #@answers = @ask.answers.includes(:user).order_by(:"votes.uc".desc,:"votes.dc".asc,:"created_at".asc)
     @answer = Answer.new
     # TEMP_REMOVE
@@ -75,6 +74,24 @@ class AsksController < ApplicationController
       format.json
     end
   end
+  
+  def answer
+    @answer = Answer.new(params[:answer])
+    @answer.ask_id = params[:id]
+    @answer.user_id = current_user.id
+    
+    @answer.body = simple_format(@answer.body.strip) if params[:did_editor_content_formatted] == "no"
+    
+    if @answer.save
+      @success = true
+    else
+      @success = false
+    end
+    
+    redirect_to :back
+
+  end
+  
   
   protected
   
