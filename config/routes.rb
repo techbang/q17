@@ -3,6 +3,11 @@ Q17::Application.routes.draw do
   match "/logout" => "sessions#destroy", :as => :logout
   match "/login"  => "sessions#new", :as => :login
   
+  match "/followed" => "home#followed"
+  match "/recommended" => "home#recommended"
+  match "/muted" => "home#muted"
+  match "/doing" => "logs#index"
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

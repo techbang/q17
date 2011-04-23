@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110423054104) do
+ActiveRecord::Schema.define(:version => 20110423060735) do
 
   create_table "asks", :force => true do |t|
     t.string   "title"
@@ -25,6 +25,13 @@ ActiveRecord::Schema.define(:version => 20110423054104) do
     t.datetime "last_updated_at"
     t.integer  "redirect_ask_id"
     t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "followed_ask_ships", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "ask_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -87,6 +94,7 @@ ActiveRecord::Schema.define(:version => 20110423054104) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "asks_count",                      :default => 0
+    t.string   "muted_ask_ids"
   end
 
   add_index "users", ["fb_user_id"], :name => "index_users_on_fb_user_id"

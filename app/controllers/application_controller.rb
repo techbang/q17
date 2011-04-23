@@ -51,4 +51,15 @@ class ApplicationController < ActionController::Base
     require_user(:format => :text)
   end
   
+  def set_seo_meta(title, options = {})
+    keywords = options[:keywords] || ""
+    description = options[:description] || ""
+
+    if title.length > 0
+      @page_title = "#{title} &raquo; "
+    end
+    @meta_keywords = keywords
+    @meta_description = description
+  end
+  
 end

@@ -34,8 +34,9 @@ class Ask < ActiveRecord::Base
   # 最后回答者
   belongs_to :last_answer_user, :class_name => 'User'
   # Followers
-  #TEMP_REMOVE
-  #references_and_referenced_in_many :followers, :stored_as => :array, :inverse_of => :followed_asks, :class_name => "User"
+  has_many :followed_ask_ships
+  has_many :followed_asks, :through => :followed_ask_ships, :source => :user
+  
   # Comments
   has_many :comments, :conditions => {:commentable_type => "Ask"}, :foreign_key => "commentable_id", :class_name => "Comment"
 
@@ -47,9 +48,8 @@ class Ask < ActiveRecord::Base
   validates_presence_of :current_user_id, :if => proc { |obj| obj.title_changed? or obj.body_changed? }
 
   # 正常可显示的问题, 前台调用都带上这个过滤
-  #TEMP_REMOVE
-  #scope :normal, where(:spams_count.lt => Setting.ask_spam_max)
   
+  scope :normal, where( "spams_count <= ? ", Setting.ask_spam_max)
   scope :last_actived, :order => "answered_at DESC" 
   scope :recent, :order => "created_at DESC"
   
