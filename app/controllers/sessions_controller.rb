@@ -2,7 +2,7 @@
 class SessionsController < ApplicationController
   skip_after_filter :store_location
   before_filter :ensure_user, :only => [:new]
-  before_filter :check_agreement, :only => [:new]
+  #before_filter :check_agreement, :only => [:new]
 
   # /login
   def new
