@@ -153,7 +153,7 @@ class Ask < ActiveRecord::Base
    # self.current_user_id = current_user_id
    # self.topics = self.topics.uniq { |s| s.downcase }
    # self.update(:topics => self.topics)
-   # insert_topic_action_log(action, topics, current_user_id)
+   insert_topic_action_log(action, topic_name , current_user_id)
   end
 
   # 提交问题为 spam
@@ -220,21 +220,25 @@ class Ask < ActiveRecord::Base
 
   protected
 
-    def insert_topic_action_log(action, topics, current_user_id)
-      begin
-        log = AskLog.new
-        log.user_id = current_user_id
-        log.title = topics.join(',')
-        log.ask = self
-        log.target_id = self.id
-        log.action = action
-        log.target_parent_id = self.id
-        log.target_parent_title = self.title
-        log.diff = ""
-        log.save
-      rescue Exception => e
+    def insert_topic_action_log(action, topic_name, current_user_id)
+      #begin
+       log = user.logs.build
+       log.type = "AskLog"
+       log.resource_id = self.id
+       log.resource_type = "Ask"
+       # 以上三個屬性不能用直接塞的, sad
+       log.title = topic_name
+       log.action = action
+       log.diff = ""
+       log.save
 
-      end
+       # log.target_parent_id = self.id
+       # log.target_parent_title = self.title
+       # log.diff = ""
+       # log.save
+      #rescue Exception => e
+
+      #end
     end
 
     def insert_action_log(action)
