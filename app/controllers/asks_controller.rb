@@ -101,7 +101,25 @@ class AsksController < ApplicationController
     count = @ask.spam(current_user.id,size)
     render :text => count
   end
+  
+  def follow
+    if !@ask
+      render :text => "0"
+      return
+    end
+    current_user.follow_ask(@ask)
+    render :text => "1"
+  end
 
+  def unfollow
+    if !@ask
+      render :text => "0"
+      return
+    end
+    current_user.unfollow_ask(@ask)
+    render :text => "1"
+  end
+  
 
   
   protected

@@ -53,6 +53,17 @@ class User < ActiveRecord::Base
     self.followed_topics.include?(topic)
   end
   
+  
+  def follow_ask(ask)
+    ask.followers << self
+    insert_follow_log("FOLLOW_ASK", ask)
+  end
+  
+  def unfollow_ask(ask)
+    self.followed_asks.delete(ask)
+    insert_follow_log("UNFOLLOW_ASK", ask)
+  end
+  
   protected
   
     def insert_follow_log(action, item, parent_item = nil)
