@@ -121,8 +121,7 @@ class Ask < ActiveRecord::Base
   # 更新话题
   # 参数 topics 可以是数组或者字符串
   # 参数 add  true 增加, false 去掉
-  def update_topics(topic_name, add = true, current_user_id = nil)
-  
+  def update_topics(topic_name, add = true, current_user_id = nil)  
     # asks/update_topic 會判斷是新增還是減少
     if add
       self.topic_list << topic_name
@@ -133,27 +132,7 @@ class Ask < ActiveRecord::Base
     end
     self.save
     
-   # self.topics = [] if self.topics.blank?
-   # # 分割逗号
-   # topics = topics.split(/，|,/) if topics.class != [].class
-   # # 去两边空格
-   # topics = topics.collect { |t| t.strip if !t.blank? }.compact
-   # action = nil
-   #
-   # if add
-   #   # 保存为独立的话题
-   #   new_topics = Topic.save_topics(topics, current_user_id)
-   #   self.topics += new_topics
-   #   action = "ADD_TOPIC"
-   # else
-   #   self.topics -= topics
-   #   action = "DEL_TOPIC"
-   # end
-   #
-   # self.current_user_id = current_user_id
-   # self.topics = self.topics.uniq { |s| s.downcase }
-   # self.update(:topics => self.topics)
-   insert_topic_action_log(action, topic_name , current_user_id)
+    insert_topic_action_log(action, topic_name , current_user_id)
   end
 
   # 提交问题为 spam
