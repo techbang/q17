@@ -102,6 +102,20 @@ class AsksController < ApplicationController
     render :text => count
   end
   
+  def update_topic
+    @name = params[:name].strip
+    @add = params[:add] == "1" ? true : false
+    if @ask.update_topics(@name,@add,current_user.id)
+      @success = true
+    else
+      @success = false
+    end
+    if not @add
+      render :text => @success
+    end
+  end
+  
+  
   def mute
     if !@ask
       render :text => "0"

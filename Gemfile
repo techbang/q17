@@ -24,9 +24,8 @@ gem "resque_mailer"
 # 表单
 gem 'simple_form', "1.3.1"
 
-
-# Use unicorn as the web server
-# gem 'unicorn'
+#topic
+gem 'acts-as-taggable-on'
 
 # Deploy with Capistrano
 # gem 'capistrano'

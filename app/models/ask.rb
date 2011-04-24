@@ -19,7 +19,8 @@ class Ask < ActiveRecord::Base
   has_many :followed_ask_ships
   has_many :followers, :through => :followed_ask_ships, :source => :user
   
-  has_many :topics
+  #has_many :topics
+  acts_as_taggable_on :topics
   
   # Comments
   has_many :comments, :conditions => {:commentable_type => "Ask"}, :foreign_key => "commentable_id", :class_name => "Comment"
@@ -120,28 +121,39 @@ class Ask < ActiveRecord::Base
   # 更新话题
   # 参数 topics 可以是数组或者字符串
   # 参数 add  true 增加, false 去掉
-  def update_topics(topics, add = true, current_user_id = nil)
-    self.topics = [] if self.topics.blank?
-    # 分割逗号
-    topics = topics.split(/，|,/) if topics.class != [].class
-    # 去两边空格
-    topics = topics.collect { |t| t.strip if !t.blank? }.compact
-    action = nil
-
+  def update_topics(topic_name, add = true, current_user_id = nil)
+  
+    # asks/update_topic 會判斷是新增還是減少
     if add
-      # 保存为独立的话题
-      new_topics = Topic.save_topics(topics, current_user_id)
-      self.topics += new_topics
+      self.topic_list << topic_name
       action = "ADD_TOPIC"
     else
-      self.topics -= topics
+      self.topic_list.remove(topic_name)
       action = "DEL_TOPIC"
     end
-
-    self.current_user_id = current_user_id
-    self.topics = self.topics.uniq { |s| s.downcase }
-    self.update(:topics => self.topics)
-    insert_topic_action_log(action, topics, current_user_id)
+    self.save
+    
+   # self.topics = [] if self.topics.blank?
+   # # 分割逗号
+   # topics = topics.split(/，|,/) if topics.class != [].class
+   # # 去两边空格
+   # topics = topics.collect { |t| t.strip if !t.blank? }.compact
+   # action = nil
+   #
+   # if add
+   #   # 保存为独立的话题
+   #   new_topics = Topic.save_topics(topics, current_user_id)
+   #   self.topics += new_topics
+   #   action = "ADD_TOPIC"
+   # else
+   #   self.topics -= topics
+   #   action = "DEL_TOPIC"
+   # end
+   #
+   # self.current_user_id = current_user_id
+   # self.topics = self.topics.uniq { |s| s.downcase }
+   # self.update(:topics => self.topics)
+   # insert_topic_action_log(action, topics, current_user_id)
   end
 
   # 提交问题为 spam
@@ -238,6 +250,8 @@ class Ask < ActiveRecord::Base
           log.target_attr = "TITLE" if self.title_changed? 
           log.target_attr = "BODY"  if self.body_changed? 
         end
+        
+        #TODO : "NEW_TO_USER", "ADD_TOPIC", "DEL_TOPIC"
         
         #log.target_attr = (self.title_changed? ? "TITLE" : (self.body_changed? ? "BODY" : "")) if action == "EDIT"
         #if(action == "NEW" and !self.to_user_id.blank?)

@@ -35,6 +35,7 @@ GEM
       activemodel (= 3.0.5)
       activesupport (= 3.0.5)
     activesupport (3.0.5)
+    acts-as-taggable-on (2.0.6)
     annotate (2.4.0)
     arel (2.0.9)
     builder (2.1.2)
@@ -111,6 +112,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  acts-as-taggable-on
   annotate
   facebooker2 (>= 0.0.10)
   json_pure
