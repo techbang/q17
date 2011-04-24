@@ -102,6 +102,24 @@ class AsksController < ApplicationController
     render :text => count
   end
   
+  def mute
+    if !@ask
+      render :text => "0"
+      return
+    end
+    current_user.mute_ask(@ask)
+    render :text => "1"
+  end
+  
+  def unmute
+    if !@ask
+      render :text => "0"
+      return
+    end
+    current_user.unmute_ask(@ask)
+    render :text => "1"
+  end
+  
   def follow
     if !@ask
       render :text => "0"

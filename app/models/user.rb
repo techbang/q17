@@ -53,6 +53,14 @@ class User < ActiveRecord::Base
     self.followed_topics.include?(topic)
   end
   
+  def mute_ask(ask)
+    self.muted_asks << ask
+
+  end
+  
+  def unmute_ask(ask)
+    self.muted_asks.delete(ask)
+  end
   
   def follow_ask(ask)
     ask.followers << self
