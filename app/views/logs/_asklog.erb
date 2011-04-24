@@ -24,7 +24,7 @@
 	          topics = log.title.split(',')
 	          for topic in topics
 	        %>
-	        <a href="/topics/<%= topic %>">#<%= topic %></a> &nbsp;
+	        <a href="/topics/<%= topic.name %>">#<%= topic.name %></a> &nbsp;
 	        <% end %>
 		<% when "DEL_TOPIC" %>
 			<%= user_name_tag(log.user) %> 从该问题删除了话题 

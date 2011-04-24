@@ -227,12 +227,18 @@ class Ask < ActiveRecord::Base
 
     def insert_action_log(action)
      # begin
-        log = user.logs.build
+        log = user.logs.build(:title => self.title)
+        
         log.type = "AskLog"
-        log.title = self.title
-        log.resource_type = "Ask"
         log.resource_id = self.id
-
+        log.resource_type = "Ask"
+        # 以上三個屬性不能用直接塞的, sad
+        
+        if action == "EDIT"
+          log.target_attr = "TITLE" if self.title_changed? 
+          log.target_attr = "BODY"  if self.body_changed? 
+        end
+        
         #log.target_attr = (self.title_changed? ? "TITLE" : (self.body_changed? ? "BODY" : "")) if action == "EDIT"
         #if(action == "NEW" and !self.to_user_id.blank?)
         #  action = "NEW_TO_USER"
