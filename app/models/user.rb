@@ -29,33 +29,17 @@ class User < ActiveRecord::Base
   def ask_muted?(ask_id)
     self.muted_ask_ids.include?(ask_id)
   end
-
- # 遇到再處理
- # def mute_ask(ask_id)
- #   self.muted_ask_ids ||= []
- #   return if self.muted_ask_ids.index(ask_id)
- #   self.muted_ask_ids << ask_id
- #   self.save
- # end
   
   def suggest_items
     return UserSuggestItem.gets(self.id, :limit => 6)
   end
-  
-  def follow_ask(ask)
-    ask.followers << self
-    ask.save
-    
-    insert_follow_log("FOLLOW_ASK", ask)
-  end
-  
+
   def topic_followed?(topic)
     self.followed_topics.include?(topic)
   end
   
   def mute_ask(ask)
     self.muted_asks << ask
-
   end
   
   def unmute_ask(ask)
