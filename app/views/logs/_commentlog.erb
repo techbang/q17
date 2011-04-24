@@ -4,7 +4,8 @@
 	<% when "Ask" %>
 		<div class="ask" ask-id="<%= log.id %>">
 			<div class="title small_title">
-				<%= user_name_tag(log.user) %> 评论了问题 <a href="/asks/<%= item.commentable.id %>?easc=yes&asid=<%=item.commentable.id %>#ask_comments">#<%= log.title %></a></div>
+				<%= user_name_tag(log.user) %> 评论了问题 <a href="/asks/<%= item.commentable.id %>?easc=yes&asid=<%=item.commentable.id %>#ask_comments">#<%= log.title %></a>
+			</div>
 		</div>
 	<% when "Answer" %>
 		<div class="ask" ask-id="<%= log.id %>">

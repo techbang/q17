@@ -18,5 +18,17 @@ module ApplicationHelper
     return false
   end
   
+  def render_item_link(item)
+    case item.class.to_s
+      when "Topic"
+        #TODO
+      when "Ask"
+        link_to(item.title, ask_path(item))
+      when "User"
+        link_to(item.name, user_path(item))
+      when "Answer"
+        link_to(item.ask.title, ask_path(item.ask))
+      end
+  end
   
 end

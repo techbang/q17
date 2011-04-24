@@ -16,7 +16,7 @@ Q17::Application.routes.draw do
 
 
   resources :user_registrations, :controller => "registrations"
-  
+  resources :users
   resources :asks do
     member do
       get "spam"
