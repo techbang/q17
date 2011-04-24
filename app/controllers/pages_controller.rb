@@ -52,4 +52,17 @@ class PagesController < ApplicationController
     end
   end
   
+  def muted
+    @per_page = 20
+    @asks = Ask.normal.includes(:user,:last_answer,:last_answer_user,:topics).only_ids(current_user.muted_ask_ids).order("answers_count,id DESC").paginate(:page => params[:page], :per_page => @per_page)
+
+    set_seo_meta("我屏蔽掉的问题")
+
+    if params[:format] == "js"
+      render "/asks/index.js"
+    else
+      render "index"
+    end
+  end
+  
 end
