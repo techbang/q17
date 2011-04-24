@@ -17,6 +17,7 @@ class User < ActiveRecord::Base
   has_many :muted_asks, :through => :muted_ask_ships, :source => :ask
   
   has_many :answers
+  has_many :logs
 
   def ask_followed?(ask)
     # Rails.logger.info { "user: #{self.inspect}" }

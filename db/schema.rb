@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110423115532) do
+ActiveRecord::Schema.define(:version => 20110424104139) do
 
   create_table "answered_ask_ships", :force => true do |t|
     t.integer  "user_id"
@@ -80,6 +80,21 @@ ActiveRecord::Schema.define(:version => 20110423115532) do
   create_table "followed_topic_ships", :force => true do |t|
     t.integer  "user_id"
     t.integer  "topic_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "logs", :force => true do |t|
+    t.string   "title"
+    t.string   "target_attr"
+    t.string   "action"
+    t.text     "diff"
+    t.integer  "target_id"
+    t.string   "target_parent_title"
+    t.integer  "user_id"
+    t.string   "type"
+    t.string   "resource_type"
+    t.string   "resource_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

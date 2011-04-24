@@ -2,24 +2,6 @@ class Ask < ActiveRecord::Base
 
  include BaseModel
    
- #field :title
- #field :body
- ## 最后回答时间
- #field :answered_at, :type => DateTime
- #field :answers_count, :type => Integer, :default => 0
- #field :comments_count, :type => Integer, :default => 0
- #field :topics, :type => Array, :default => []
- #field :spams_count, :type => Integer, :default => 0
- #field :spam_voter_ids, :type => Array, :default => []
- #field :views_count, :type => Integer, :default => 0
- ## 最后活动时间，这个时间应该设置为该问题下辖最后一条log的发生时间
- #field :last_updated_at, :type => DateTime
- ## 重定向问题编号
- #field :redirect_ask_id
- #
- #index :topics
- #index :title
-
   # 提问人
   belongs_to :user, :counter_cache => true
   # 对指定人的提问
@@ -75,7 +57,8 @@ class Ask < ActiveRecord::Base
   #redis_search_index(:title_field => :title,:ext_fields => [:topics])
 
   before_save :fill_default_values
-  after_create :create_log, :send_mails
+  after_create :create_log
+  after_create :send_mails
   before_update :update_log
 
   def view!
@@ -243,23 +226,25 @@ class Ask < ActiveRecord::Base
     end
 
     def insert_action_log(action)
-      begin
-        log = AskLog.new
-        log.user_id = self.current_user_id
+     # begin
+        log = user.logs.build
+        log.type = "AskLog"
         log.title = self.title
-        log.ask = self
-        log.target_id = self.id
-        log.target_attr = (self.title_changed? ? "TITLE" : (self.body_changed? ? "BODY" : "")) if action == "EDIT"
-        if(action == "NEW" and !self.to_user_id.blank?)
-          action = "NEW_TO_USER"
-          log.target_parent_id = self.to_user_id
-        end
+        log.resource_type = "Ask"
+        log.resource_id = self.id
+
+        #log.target_attr = (self.title_changed? ? "TITLE" : (self.body_changed? ? "BODY" : "")) if action == "EDIT"
+        #if(action == "NEW" and !self.to_user_id.blank?)
+        #  action = "NEW_TO_USER"
+        #  log.target_parent_id = self.to_user_id
+        #end
+        
         log.action = action
         log.diff = ""
         log.save
-      rescue Exception => e
+      #rescue Exception => e
 
-      end
+      #end
     end
 
 end

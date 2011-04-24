@@ -1,0 +1,57 @@
+<% item = log.resource %>
+<% if !item.blank? and item.spams_count < Setting.ask_spam_max %>
+<div class="ask" ask-id="<%= log.id %>">
+		<div class="savatar"><%= user_avatar_tag(log.user,:small) %></div>
+
+	<% case action %>
+	<% when "ADD_TOPIC", "DEL_TOPIC","EDIT" %>
+		<div class="title small_title"><%= ask_title_tag(item) %></div>
+	 <% else %>
+      <div class="title"><%= ask_title_tag(item) %></div>
+    <% end %>
+
+	<div class="info">
+		<% case action %>
+      <% when "NEW" %>
+      	<%= user_name_tag(log.user) %> 添加了该问题
+		<% when "NEW_TO_USER" %>
+			<%= user_name_tag(log.user) %> 向 <%= user_name_tag(item.to_user) %> 提出了问题
+		<% when "EDIT" %>
+			<%= user_name_tag(log.user) %> <%= log.target_attr == "TITLE" ? "修改了该问题" : "修改了该问题的补充说明" %>
+		<% when "ADD_TOPIC" %>
+			<%= user_name_tag(log.user) %> 给该问题添加了话题 
+	        <%
+	          topics = log.title.split(',')
+	          for topic in topics
+	        %>
+	        <a href="/topics/<%= topic %>">#<%= topic %></a> &nbsp;
+	        <% end %>
+		<% when "DEL_TOPIC" %>
+			<%= user_name_tag(log.user) %> 从该问题删除了话题 
+	        <%
+	          topics = log.title.split(',')
+	          for topic in topics
+	        %>
+	        <a href="/topics/<%= topic.name %>">#<%= topic.name %></a> &nbsp;
+	        <% end %>
+		<% end %>
+		
+		<% if ["NEW", "EDIT"].include?(log.action) %>
+			• <%= item.answers_count %> 个答案 
+			<% if current_user %>
+          <% if current_user.ask_followed?(item) %>
+          	• <a href="#" onclick="return Asks.simple_unfollow(this,'<%= item.id %>')">取消关注</a> 
+          <% else %>
+          	• <a href="#" onclick="return Asks.simple_follow(this,'<%= item.id %>')">关注</a> 
+          <% end %>
+
+          <% if current_user.ask_muted?(item.id) %>
+          	• <a href="#" onclick="return Asks.unmute(this,'<%= item.id %>')">取消屏蔽</a> 
+          <% else %>
+          	• <a href="#" onclick="return Asks.mute(this,'<%= item.id %>')">不感兴趣</a> 
+          <% end %>
+        <% end %>
+		 <% end %>
+	</div> 
+</div>
+<% end %>

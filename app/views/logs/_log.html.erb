@@ -1,0 +1,4 @@
+<% log.action = "" if log.action.blank? %>
+<% action = log.action.gsub("ADDTOPIC", "ADD_TOPIC").gsub("DELTOPIC", "DEL_TOPIC") %>
+
+<%= render :partial => "#{log.type.downcase}", :locals => { :log => log, :action => action }%>
