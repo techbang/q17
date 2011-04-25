@@ -13,9 +13,6 @@ class Topic < ActsAsTaggableOn::Tag
   
   # Followers
   
-  has_many :followed_ask_ships
-  has_many :followed_asks, :through => :followed_ask_ships, :source => :ask
-  
   has_many :followed_topic_ships, :as => :target , :class_name => "Followship"
   has_many :followers, :through => :followed_topic_ships, :source => :user
   
