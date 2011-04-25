@@ -64,6 +64,31 @@ class User < ActiveRecord::Base
     insert_follow_log("UNFOLLOW_ASK", ask)
   end
   
+  def follow_topic(topic)
+    topic.followers << self
+    #return if topic.follower_ids.include? self.id
+    #topic.followers << self
+    #topic.followers_count_changed = true
+    #topic.save
+    #
+    ## 清除推荐话题
+    #UserSuggestItem.delete(self.id, "Topic", topic.id)
+    
+    #insert_follow_log("FOLLOW_TOPIC", topic)
+  end
+  
+  def unfollow_topic(topic)
+    self.followed_topics.delete(topic)
+    #self.save
+    #
+    #topic.followers.delete(self)
+    #topic.followers_count_changed = true
+    #topic.save
+    #
+    #insert_follow_log("UNFOLLOW_TOPIC", topic)
+  end
+  
+  
   #protected
   
     def insert_follow_log(action, item, parent_item = nil)
