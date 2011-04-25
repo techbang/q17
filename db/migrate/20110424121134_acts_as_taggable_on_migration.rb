@@ -2,6 +2,11 @@ class ActsAsTaggableOnMigration < ActiveRecord::Migration
   def self.up
     create_table :tags do |t|
       t.string :name
+      t.text   :summary
+      t.text   :conver
+      t.integer :asks_count, :default => 0
+      t.integer :ask_id
+      t.string  :cover, :string
     end
 
     create_table :taggings do |t|

@@ -1,4 +1,4 @@
-class Topic < ActiveRecord::Base
+class Topic < ActsAsTaggableOn::Tag
   include BaseModel
   
   attr_accessor :current_user_id, :cover_changed, :followers_count_changed
@@ -16,7 +16,7 @@ class Topic < ActiveRecord::Base
   has_many :followed_ask_ships
   has_many :followed_asks, :through => :followed_ask_ships, :source => :ask
   
-  has_many :followed_topic_ships
+  has_many :followed_topic_ships, :as => :target , :class_name => "Followship"
   has_many :followers, :through => :followed_topic_ships, :source => :user
   
   #references_and_referenced_in_many :followers, :stored_as => :array, :inverse_of => :followed_topics, :class_name => "User"

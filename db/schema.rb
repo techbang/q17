@@ -12,13 +12,6 @@
 
 ActiveRecord::Schema.define(:version => 20110425203306) do
 
-  create_table "answered_ask_ships", :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "ask_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "answers", :force => true do |t|
     t.text     "body"
     t.integer  "comments_count",   :default => 0
@@ -101,13 +94,6 @@ ActiveRecord::Schema.define(:version => 20110425203306) do
     t.datetime "updated_at"
   end
 
-  create_table "muted_ask_ships", :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "ask_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "notifications", :force => true do |t|
     t.boolean  "has_read"
     t.integer  "target_id"
@@ -165,17 +151,16 @@ ActiveRecord::Schema.define(:version => 20110425203306) do
   add_index "taggings", ["taggable_id", "taggable_type", "context"], :name => "index_taggings_on_taggable_id_and_taggable_type_and_context"
 
   create_table "tags", :force => true do |t|
-    t.string "name"
+    t.string  "name"
+    t.text    "summary"
+    t.text    "conver"
+    t.integer "asks_count", :default => 0
+    t.integer "ask_id"
+    t.string  "cover"
+    t.string  "string"
   end
 
   create_table "topics", :force => true do |t|
-    t.string   "name"
-    t.text     "summary"
-    t.text     "conver"
-    t.integer  "asks_count", :default => 0
-    t.integer  "ask_id"
-    t.string   "cover"
-    t.string   "string"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
