@@ -27,8 +27,6 @@ class PagesController < ApplicationController
     end
   end
   
-  
-  
   def followed
     @per_page = 20
     @asks = current_user ? current_user.followed_asks.normal : Ask.normal

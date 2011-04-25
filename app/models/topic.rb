@@ -1,7 +1,8 @@
 class Topic < ActsAsTaggableOn::Tag
   include BaseModel
   
-  attr_accessor :current_user_id, :cover_changed, :followers_count_changed
+  attr_accessor :current_user_id, :cover_changed, :followers_count_changed, :summary
+  attr_accessible :name, :summary
   #field :name
   #field :summary
   #field :cover
