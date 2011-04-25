@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110425142318) do
+ActiveRecord::Schema.define(:version => 20110425203306) do
 
   create_table "answered_ask_ships", :force => true do |t|
     t.integer  "user_id"
@@ -38,6 +38,14 @@ ActiveRecord::Schema.define(:version => 20110425142318) do
     t.integer  "count",       :default => 0
     t.integer  "mail_sent",   :default => 0
     t.string   "invitor_ids"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "ask_ships", :force => true do |t|
+    t.integer  "ask_id"
+    t.integer  "user_id"
+    t.string   "type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

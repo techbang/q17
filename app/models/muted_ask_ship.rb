@@ -1,4 +1,2 @@
-class MutedAskShip < ActiveRecord::Base
-  belongs_to :ask
-  belongs_to :user
+class MutedAskShip < AskShip
 end

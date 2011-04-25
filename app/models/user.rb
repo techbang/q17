@@ -17,15 +17,8 @@ class User < ActiveRecord::Base
   has_many :followed_topic_ships, :class_name => "Followship"
   has_many :followed_topics , :through => :followed_topic_ships, :source => :target , :source_type => "Topic"
   
-  #has_many :followed_ask_ships
-  #has_many :followed_asks, :through => :followed_ask_ships, :source => :ask
-
-  
   has_many :answered_ask_ships
   has_many :answered_asks, :through => :answered_ask_ships, :source => :ask
-  
-  #has_many :followed_topic_ships
-  #has_many :followed_topics, :through => :followed_topic_ships, :source => :topic
   
   has_many :muted_ask_ships
   has_many :muted_asks, :through => :muted_ask_ships, :source => :ask
