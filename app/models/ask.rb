@@ -16,7 +16,8 @@ class Ask < ActiveRecord::Base
   # 最后回答者
   belongs_to :last_answer_user, :class_name => 'User'
   # Followers
-  has_many :followed_ask_ships
+   
+  has_many :followed_ask_ships, :as => :target , :class_name => "Followship"
   has_many :followers, :through => :followed_ask_ships, :source => :user
   
   #has_many :topics

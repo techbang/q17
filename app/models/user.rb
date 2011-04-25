@@ -4,14 +4,28 @@ class User < ActiveRecord::Base
   attr_accessible :login, :name, :nickname, :email, :fb_user_id, :email_hash , :avatar_file_name , :profile_attributes
   has_many :notifications
 
-  has_many :followed_ask_ships
-  has_many :followed_asks, :through => :followed_ask_ships, :source => :ask
+
+  has_many :followships,:foreign_key => 'user_id',:class_name => 'Followship'
+  has_many :befollowships,:foreign_key => 'follower_id',:class_name => 'Followship'
+  has_many :following_users   ,:through => :followships, :source =>  :followshipped
+  has_many :followers,:through => :befollowships, :source => :befollowshipped
+  
+  
+  has_many :followed_ask_ships, :class_name => "Followship"
+  has_many :followed_asks , :through => :followed_ask_ships, :source => :target , :source_type => "Ask"
+  
+  has_many :followed_topic_ships, :class_name => "Followship"
+  has_many :followed_topics , :through => :followed_topic_ships, :source => :target , :source_type => "Topic"
+  
+  #has_many :followed_ask_ships
+  #has_many :followed_asks, :through => :followed_ask_ships, :source => :ask
+
   
   has_many :answered_ask_ships
   has_many :answered_asks, :through => :answered_ask_ships, :source => :ask
   
-  has_many :followed_topic_ships
-  has_many :followed_topics, :through => :followed_topic_ships, :source => :topic
+  #has_many :followed_topic_ships
+  #has_many :followed_topics, :through => :followed_topic_ships, :source => :topic
   
   has_many :muted_ask_ships
   has_many :muted_asks, :through => :muted_ask_ships, :source => :ask
