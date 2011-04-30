@@ -1,0 +1,15 @@
+<% item = log.resource %>
+<div class="ask" ask-id="<%= log.id %>">
+	<% case item.commentable_type %>
+		<% when "Ask" %>
+			<div class="title small_title">
+				<%= user_name_tag(log.creator) %> 评论了问题 
+				<a href="/asks/<%= log.target_id %>?easc=yes&asid=<%= log.target_id %>#ask_comments">#<%= item.commentable.title %></a>
+			</div>
+		<% when "Answer" %>
+			<div class="title small_title">
+				<%= user_name_tag(log.creator) %> 评论了问题 
+				<a href="/asks/<%= item.answer.ask.id %>?eawc=yes&awid=<%= item.answer.ask.id %>#answer_<%= item.answer.ask.title %>">#<%= item.answer.ask.title %></a> 中的回答
+			</div>
+	<% end %>
+</div>

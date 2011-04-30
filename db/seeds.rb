@@ -21,6 +21,12 @@ ask.user_id = 1
 ask.current_user_id = 1
 ask.save!
 
+comment1 = Comment.new(:body => "comment-1")
+comment1.commentable_type = "Ask"
+comment1.commentable_id = 1
+comment1.user_id = 1
+comment1.save!
+
 topic1 = Topic.new(:name => "topic-1", :summary => "summary-1")
 topic1.ask_id = 1
 topic1.save
@@ -29,6 +35,12 @@ answer1 = Answer.new(:body => "answer-1")
 answer1.ask_id = 1
 answer1.user_id = 1
 answer1.save
+
+comment2 = Comment.new(:body => "comment-1")
+comment2.commentable_type = "Answer"
+comment2.commentable_id = 1
+comment2.user_id = 1
+comment2.save!
 
 ask.update_topics("Apple", true, 1)
 ask.update_topics("Apple", false, 1)
