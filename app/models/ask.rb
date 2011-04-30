@@ -213,6 +213,36 @@ class Ask < ActiveRecord::Base
       time_entry.save!
     end
     
+    def insert_action_log(action)
+      # begin
+         log = user.logs.build(:title => self.title)
+
+         log.type = "AskLog"
+         log.resource_id = self.id
+         log.resource_type = "Ask"
+         # 以上三個屬性不能用直接塞的, sad
+
+         if action == "EDIT"
+           log.target_attr = "TITLE" if self.title_changed? 
+           log.target_attr = "BODY"  if self.body_changed? 
+         end
+
+         #TODO : "NEW_TO_USER", "ADD_TOPIC", "DEL_TOPIC"
+
+         #log.target_attr = (self.title_changed? ? "TITLE" : (self.body_changed? ? "BODY" : "")) if action == "EDIT"
+         #if(action == "NEW" and !self.to_user_id.blank?)
+         #  action = "NEW_TO_USER"
+         #  log.target_parent_id = self.to_user_id
+         #end
+
+         log.action = action
+         log.diff = ""
+         log.save
+       #rescue Exception => e
+
+       #end
+     end
+    
     def insert_add_topic_time_entry(topic)
       time_entry = self.user.time_entries.build
       time_entry.resource_type = "Ask"
@@ -233,55 +263,7 @@ class Ask < ActiveRecord::Base
       time_entry.save!
     end
 
-    def insert_topic_action_log(action, topic_name, current_user_id)
-      #begin
-       log = user.logs.build
-       log.type = "AskLog"
-       log.resource_id = self.id
-       log.resource_type = "Ask"
-       # 以上三個屬性不能用直接塞的, sad
-       log.title = topic_name
-       log.action = action
-       log.diff = ""
-       log.save
 
-       # log.target_parent_id = self.id
-       # log.target_parent_title = self.title
-       # log.diff = ""
-       # log.save
-      #rescue Exception => e
-
-      #end
-    end
-
-    def insert_action_log(action)
-     # begin
-        log = user.logs.build(:title => self.title)
-        
-        log.type = "AskLog"
-        log.resource_id = self.id
-        log.resource_type = "Ask"
-        # 以上三個屬性不能用直接塞的, sad
-        
-        if action == "EDIT"
-          log.target_attr = "TITLE" if self.title_changed? 
-          log.target_attr = "BODY"  if self.body_changed? 
-        end
-        
-        #TODO : "NEW_TO_USER", "ADD_TOPIC", "DEL_TOPIC"
-        
-        #log.target_attr = (self.title_changed? ? "TITLE" : (self.body_changed? ? "BODY" : "")) if action == "EDIT"
-        #if(action == "NEW" and !self.to_user_id.blank?)
-        #  action = "NEW_TO_USER"
-        #  log.target_parent_id = self.to_user_id
-        #end
-        
-        log.action = action
-        log.diff = ""
-        log.save
-      #rescue Exception => e
-
-      #end
-    end
+ 
 
 end
