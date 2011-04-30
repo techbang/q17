@@ -98,8 +98,6 @@ class AsksController < ApplicationController
     else
       @success = false
     end
-    
-    redirect_to :back
 
   end
   
