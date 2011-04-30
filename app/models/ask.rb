@@ -29,7 +29,7 @@ class Ask < ActiveRecord::Base
   has_many :ask_invites
   
   has_many :time_entries
-  after_create :insert_time_entry
+  after_create :insert_add_ask_time_entry
   
 
   attr_protected :user_id
@@ -130,14 +130,15 @@ class Ask < ActiveRecord::Base
     # asks/update_topic 會判斷是新增還是減少
     if add
       self.topic_list << topic_name
-      action = "ADD_TOPIC"
+      action = "ADD"
     else
       self.topic_list.remove(topic_name)
-      action = "DEL_TOPIC"
+      action = "DELETE"
     end
+
     self.save
-    
-    insert_topic_action_log(action, topic_name , current_user_id)
+    topic = Topic.find_by_name(topic_name)
+    self.send("insert_#{action.downcase}_topic_time_entry", topic)
   end
 
   # 提交问题为 spam
@@ -204,11 +205,31 @@ class Ask < ActiveRecord::Base
 
   protected
   
-    def insert_time_entry
+    def insert_add_ask_time_entry
       time_entry = self.user.time_entries.build
       time_entry.resource_type = "Ask"
       time_entry.resource_id = self.id
       time_entry.action = "ADD"
+      time_entry.save!
+    end
+    
+    def insert_add_topic_time_entry(topic)
+      time_entry = self.user.time_entries.build
+      time_entry.resource_type = "Ask"
+      time_entry.resource_id = self.id
+      time_entry.target_type = "Topic"
+      time_entry.target_id = topic.id
+      time_entry.action = "ADD"
+      time_entry.save!
+    end
+    
+    def insert_delete_topic_time_entry(topic)
+      time_entry = self.user.time_entries.build
+      time_entry.resource_type = "Ask"
+      time_entry.resource_id = self.id
+      time_entry.target_type = "Topic"
+      time_entry.target_id = topic.id
+      time_entry.action = "DELETE"
       time_entry.save!
     end
 
