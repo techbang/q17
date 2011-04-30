@@ -87,39 +87,6 @@ class User < Techbang::User
   
   #protected
 
-  def insert_follow_log(action, item, parent_item = nil)
-    #begin
-
-
-    log = self.logs.build
-
-    log.type = "UserLog"
-    log.resource_id = item.id
-    log.resource_type = item.class.to_s
-    log.title = self.name
-    log.action = action
-    log.diff = ""
-    log.save
-
-    #log = UserLog.new
-    #log.user_id = self.id
-    #log.title = self.name
-    #log.target_id = item.id
-    #log.action = action
-    #if parent_item.blank?
-    #  log.target_parent_id = item.id
-    #  log.target_parent_title = item.is_a?(Ask) ? item.title : item.name
-    #else
-    #  log.target_parent_id = parent_item.id
-    #  log.target_parent_title = parent_item.title
-    #end
-    #log.diff = ""
-    #log.save
-    #rescue Exception => e
-
-    #end
-  end
-
   private
   
     # 該死的 before_destroy 不起作用只好用這種方式解
