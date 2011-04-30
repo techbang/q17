@@ -1,0 +1,17 @@
+<% item = log.resource %>
+<div class="ask" ask-id="<%= log.id %>">
+	<div class="savatar">
+   	<%= user_avatar_tag(log.creator,:small) %>
+ 	</div>
+
+	<div class="title small_title">
+		<%= user_name_tag(log.creator) %>
+		<% case action %>
+			<% when "ADD" %>
+				关注 <%= render_item_link(log.target) %>
+			<% when "DELETE" %>
+			   取消关注 <%= render_item_link(log.target) %>
+		<% end %>
+	</div>
+	
+</div>

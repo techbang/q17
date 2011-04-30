@@ -10,6 +10,7 @@ one: {}
 two: {}
 #  column: value
 
+
 # == Schema Information
 #
 # Table name: users
@@ -28,5 +29,8 @@ two: {}
 #  is_agreed        :boolean(1)
 #  created_at       :datetime
 #  updated_at       :datetime
+#  asks_count       :integer(4)      default(0)
+#  answers_count    :integer(4)      default(0)
+#  tagline          :string(255)
 #
 

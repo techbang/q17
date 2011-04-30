@@ -6,3 +6,16 @@ class FollowshipTest < ActiveSupport::TestCase
     assert true
   end
 end
+
+# == Schema Information
+#
+# Table name: followships
+#
+#  id          :integer(4)      not null, primary key
+#  target_id   :integer(4)
+#  target_type :string(255)
+#  user_id     :integer(4)
+#  created_at  :datetime
+#  updated_at  :datetime
+#
+

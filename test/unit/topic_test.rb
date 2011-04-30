@@ -6,3 +6,18 @@ class TopicTest < ActiveSupport::TestCase
     assert true
   end
 end
+
+# == Schema Information
+#
+# Table name: tags
+#
+#  id         :integer(4)      not null, primary key
+#  name       :string(255)
+#  summary    :text
+#  conver     :text
+#  asks_count :integer(4)      default(0)
+#  ask_id     :integer(4)
+#  cover      :string(255)
+#  string     :string(255)
+#
+

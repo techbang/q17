@@ -7,6 +7,7 @@ class UserTest < ActiveSupport::TestCase
   end
 end
 
+
 # == Schema Information
 #
 # Table name: users
@@ -25,5 +26,8 @@ end
 #  is_agreed        :boolean(1)
 #  created_at       :datetime
 #  updated_at       :datetime
+#  asks_count       :integer(4)      default(0)
+#  answers_count    :integer(4)      default(0)
+#  tagline          :string(255)
 #
 

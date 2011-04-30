@@ -20,11 +20,11 @@ module ApplicationHelper
   
   def render_item_link(item)
     case item.class.to_s
-      when "Topic"
-        #TODO
+      when "Topic", "ActsAsTaggableOn::Tag"
+        link_to(item.name, topic_path(item))
       when "Ask"
         link_to(item.title, ask_path(item))
-      when "User"
+      when "User", "Techbang::User"
         link_to(item.name, user_path(item))
       when "Answer"
         link_to(item.ask.title, ask_path(item.ask))

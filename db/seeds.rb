@@ -6,23 +6,38 @@
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Daley', :city => cities.first)
 
-TEST_ACCOUNT = ["xdite"]
+TEST_ACCOUNT = ["xdite", "v13"]
 puts "create user"
 TEST_ACCOUNT.each do |account|
   u = User.create(:login => account, :name => account, :nickname => account, :slug => account )
   u.save
 end
 
-
+user1 = User.find(1)
+user2 = User.find(2)
 
 ask = Ask.new(:title => "ask-title-1", :body => "ask-body-1")
 ask.user_id = 1
 ask.current_user_id = 1
 ask.save!
 
-topic = Topic.new(:name => "topic-1", :summary => "summary-1")
-topic.ask_id = 1
-topic.save
+topic1 = Topic.new(:name => "topic-1", :summary => "summary-1")
+topic1.ask_id = 1
+topic1.save
+
+answer1 = Answer.new(:body => "answer-1")
+answer1.ask_id = 1
+answer1.user_id = 1
+answer1.save
 
 ask.update_topics("Apple", true, 1)
 ask.update_topics("Apple", false, 1)
+
+user1.follow(user2)
+user1.unfollow(user2)
+user1.follow_topic(topic1)
+user1.unfollow_topic(topic1)
+user1.follow_ask(ask)
+user1.unfollow_ask(ask)
+#user1.follow_answer(answer1)
+#user1.unfollow_answer(answer1)
