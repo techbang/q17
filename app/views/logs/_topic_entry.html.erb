@@ -1,0 +1,14 @@
+<% item = log.resource %>
+<div class="ask" ask-id="<%= log.id %>">
+	<div class="title small_title">
+	<% if log.action == "ADD"%>
+		<%= user_name_tag(log.creator) %> 创建了话题 <a href="/topics/<%= item.name %>">#<%= item.name %></a>
+	<% end %>
+	<% if log.action == "EDIT_SUMMARY" %>
+		<%= user_name_tag(log.creator) %> 为话题 <a href="/topics/<%= item.name %>">#<%= item.name %> </a> 提交了介绍
+	<% end %>
+   <% if log.action == "EDIT_COVER" %>
+			<%= user_name_tag(log.creator) %> 为话题 <a href="/topics/<%= item.name %>">#<%= item.name %> </a> 上传了封面图片。
+	<% end %>
+   </div>
+</div>
