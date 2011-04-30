@@ -206,7 +206,7 @@ class Ask < ActiveRecord::Base
   
     def insert_time_entry
       time_entry = self.user.time_entries.build
-      time_entry.resource_type = "Topic"
+      time_entry.resource_type = "Ask"
       time_entry.resource_id = self.id
       time_entry.action = "ADD"
       time_entry.save!
