@@ -30,6 +30,7 @@ class Ask < ActiveRecord::Base
   
   has_many :time_entries
   after_create :insert_add_ask_time_entry
+  before_update :insert_update_ask_time_entry
   
 
   attr_protected :user_id
@@ -65,7 +66,7 @@ class Ask < ActiveRecord::Base
   before_save :fill_default_values
   after_create :create_log
   after_create :send_mails
-  before_update :update_log
+
 
   def view!
     self.class.increment_counter(:views_count, 1)
@@ -213,19 +214,25 @@ class Ask < ActiveRecord::Base
       time_entry.save!
     end
     
+    def insert_update_ask_time_entry
+      time_entry = self.user.time_entries.build
+      time_entry.resource_type = "Ask"
+      time_entry.resource_id = self.id
+      
+      if self.title_changed? 
+        time_entry.action = "EDIT_TITLE"
+      elsif self.body_changed? 
+        time_entry.action = "EDIT_BODY"
+      else
+        time_entry.action = "EDIT"
+      end
+      
+      time_entry.save!
+    end
+    
     def insert_action_log(action)
       # begin
-         log = user.logs.build(:title => self.title)
 
-         log.type = "AskLog"
-         log.resource_id = self.id
-         log.resource_type = "Ask"
-         # 以上三個屬性不能用直接塞的, sad
-
-         if action == "EDIT"
-           log.target_attr = "TITLE" if self.title_changed? 
-           log.target_attr = "BODY"  if self.body_changed? 
-         end
 
          #TODO : "NEW_TO_USER", "ADD_TOPIC", "DEL_TOPIC"
 
