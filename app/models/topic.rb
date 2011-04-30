@@ -1,8 +1,8 @@
 class Topic < ActsAsTaggableOn::Tag
   include BaseModel
   
-  attr_accessor :current_user_id, :cover_changed, :followers_count_changed, :summary
-  attr_accessible :name, :summary
+  attr_accessor :current_user_id, :cover_changed, :followers_count_changed
+  attr_accessible :name, :summary, :current_user_id
   #field :cover
 
   #field :asks_count, :type => Integer, :default => 0
@@ -23,6 +23,7 @@ class Topic < ActsAsTaggableOn::Tag
   def to_param
     "#{name}"
   end
+  
   def followers_count
     self.follower_ids.count
   end
@@ -48,52 +49,18 @@ class Topic < ActsAsTaggableOn::Tag
   #redis_search_index(:title_field => :name,
   #                   :ext_fields => [:followers_count,:cover_small])
 
-  # 敏感词验证
-  before_validation :check_spam_words
-  def check_spam_words
-    if self.spam?("name")
-      return false
-    end
-
-    if self.spam?("summary")
-      return false
-    end
-  end
-
   # Hack 上传图片，用于记录 cover 是否改变过
   def cover=(obj)
     super(obj)
     self.cover_changed = true
   end
 
-  before_update :update_log
+  before_update :insert_update_topic_time_entry
+  
   def update_log
-    return  if self.current_user_id.blank?
-    insert_action_log("EDIT") if self.cover_changed or self.summary_changed?
-  end
-
-  def self.save_topics(topics, current_user_id)
-    new_topics = []
-    topics.each do |item|
-      topic = find_by_name(item.strip)
-      # find_or_create_by(:name => item.strip)
-      if topic.nil?
-        topic = create(:name => item.strip)
-        begin
-          log = TopicLog.new
-          log.user_id = current_user_id
-          log.title = topic.name
-          log.topic = topic
-          log.action = "NEW"
-          log.diff = ""
-          log.save
-        rescue Exception => e
-          Rails.logger.warn { "Topic save_topics failed! #{e}" }
-        end
-      end
-      new_topics << topic.name
-    end
-    new_topics
+   # return  if self.current_user_id.blank?
+   #insert_update_topic_time_entry if self.summary_changed?
+   # insert_action_log("EDIT") #if self.cover_changed or self.summary_changed?
   end
 
   def self.find_by_name(name)
@@ -108,19 +75,21 @@ class Topic < ActsAsTaggableOn::Tag
   end
 
   protected
-    def insert_action_log(action)
-      begin
-        log = TopicLog.new
-        log.user_id = self.current_user_id
-        log.title = self.name
-        log.target_id = self.id
-        log.target_attr = (self.cover_changed == true ? "COVER" : (self.summary_changed? ? "SUMMARY" : "")) if action == "EDIT"
-        log.action = action
-        log.diff = ""
-        log.save
-      rescue Exception => e
-        Rails.logger.info { "#{e}" } 
+  
+    
+    def insert_update_topic_time_entry
+      user = User.find(self.current_user_id)
+      time_entry = user.time_entries.build
+      time_entry.resource_type = "Topic"
+      time_entry.resource_id = self.id
+      
+      if self.summary_changed? 
+        time_entry.action = "EDIT_SUMMARY"
+        time_entry.save!
       end
+      
+      #time_entry.action = "EDIT"
+    
     end
 end
 

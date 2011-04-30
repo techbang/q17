@@ -25,7 +25,7 @@ gem "resque_mailer"
 gem 'simple_form', "1.3.1"
 
 #topic
-gem 'acts-as-taggable-on'
+gem 'acts-as-taggable-on'#, :git => "git://github.com/xdite/acts-as-taggable-on.git"
 
 # Deploy with Capistrano
 # gem 'capistrano'

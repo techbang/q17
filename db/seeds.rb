@@ -28,7 +28,7 @@ comment1.user_id = 1
 comment1.save!
 
 topic1 = Topic.new(:name => "topic-1", :summary => "summary-1")
-topic1.ask_id = 1
+#topic1.ask_id = 1
 topic1.save
 
 answer1 = Answer.new(:body => "answer-1")
