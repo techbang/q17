@@ -23,3 +23,6 @@ ask.save!
 topic = Topic.new(:name => "topic-1", :summary => "summary-1")
 topic.ask_id = 1
 topic.save
+
+ask.update_topics("Apple", true, 1)
+ask.update_topics("Apple", false, 1)

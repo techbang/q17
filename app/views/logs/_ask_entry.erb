@@ -24,6 +24,10 @@
 			<% case action %>
 				<% when "ADD" %>
 					<%= user_name_tag(log.creator) %> 添加了该问题
+				<% when "EDIT_TITLE" %>
+					<%= user_name_tag(log.creator) %> 修改了该问题
+				<% when "EDIT_BODY" %> 
+					<%= user_name_tag(log.creator) %> 修改了该问题的补充说明
 			<% end %>
         
 		   • <%= item.answers_count %> 个答案 

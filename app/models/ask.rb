@@ -64,7 +64,7 @@ class Ask < ActiveRecord::Base
   #redis_search_index(:title_field => :title,:ext_fields => [:topics])
 
   before_save :fill_default_values
-  after_create :create_log
+  #after_create :create_log
   after_create :send_mails
 
 
@@ -221,13 +221,13 @@ class Ask < ActiveRecord::Base
       
       if self.title_changed? 
         time_entry.action = "EDIT_TITLE"
+        time_entry.save!
       elsif self.body_changed? 
         time_entry.action = "EDIT_BODY"
-      else
-        time_entry.action = "EDIT"
+        time_entry.save!
       end
-      
-      time_entry.save!
+      #time_entry.action = "EDIT"
+    
     end
     
     def insert_action_log(action)
