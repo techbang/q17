@@ -1,0 +1,46 @@
+<% item = log.resource %>
+
+<div class="ask" ask-id="<%= log.id %>">
+	<div class="savatar"><%= user_avatar_tag(log.creator,:small) %></div>
+	<div class="title"><%= ask_title_tag(item.ask) %></div>
+	<div class="info">
+     	<%= user_name_tag(log.creator) %> <%= action == "ADD" ? "回答了该问题" : "修改了自己的回答" %>
+     	• <%= item.ask.answers_count %> 个答案 
+			<% if current_user %>
+				<% if current_user.ask_followed?(item.ask) %>
+     				• <a href="#" onclick="return Asks.simple_unfollow(this,'<%= item.ask.id %>')">取消关注</a> 
+				<% else %>
+					• <a href="#" onclick="return Asks.simple_follow(this,'<%= item.ask.id %>')">关注</a> 
+				<% end %>
+			
+				<% if current_user.ask_muted?(item.ask.id) %>
+					• <a href="#" onclick="return Asks.unmute(this,'<%= item.ask.id %>')">取消屏蔽</a> 
+				<% else %>
+     				• <a href="#" onclick="return Asks.mute(this,'<%= item.ask.id %>')">不感兴趣</a> 
+				<% end %>
+			<% end %>
+			
+			<% if action == "ADD" %>
+	    		<div class="last_answer answer">
+	      		<div class="attr">
+	        			<span class="votes"><%= item.votes_count %></span>
+	      		</div>
+					<div class="data">
+						<div class="author">
+							<%= user_name_tag(log.creator) %>，<%= user_tagline_tag(log.creator) %>
+						</div>
+						<div class="md_body">
+							<% if item.chomp_body.gsub(/<.*?>/,'').length <= 100 %>
+								<%= md_body(item.chomp_body) %>
+							<% else %>
+								<div class="full-body" id="awb_<%= log.id %>_<%= item.id %>"><%= md_body(item.chomp_body) %></div>
+            				<div id="aws_<%= log.id %>_<%= item.id %>"><%= raw truncate(item.body.gsub(/<.*?>/,''),:length => 100, :truncate_string =>"……") %> 
+              					<a href="#" class="smore" onclick="return show_all_answer_body('<%= log.id %>', '<%= item.id %>')">(更多)</a>
+								</div>
+							<% end %>
+						</div>
+					</div>
+				</div>
+			<% end %>
+   </div>
+</div>

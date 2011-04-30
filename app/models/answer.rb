@@ -26,6 +26,8 @@ class Answer < ActiveRecord::Base
       return false
     end
   end
+  
+
 
   after_create :mail_deliver_new_answer
   def mail_deliver_new_answer
@@ -53,11 +55,8 @@ class Answer < ActiveRecord::Base
   end
 
   after_create :save_to_ask_and_update_answered_at
-  before_update :log_update
-  
-  def log_update
-    insert_action_log("EDIT") if self.body_changed?
-  end
+  after_create :insert_add_answer_time_entry
+  before_update :insert_update_answer_time_entry
   
   def save_to_ask_and_update_answered_at
     self.ask.update_attributes({:answered_at => self.created_at, 
@@ -70,7 +69,6 @@ class Answer < ActiveRecord::Base
     
     # 保存用户回答过的问题列表
     self.user.answered_asks << self.ask
-    insert_action_log("NEW")
   end
   
   def votes_count
@@ -79,23 +77,30 @@ class Answer < ActiveRecord::Base
   
   protected
   
-    def insert_action_log(action)
-      begin
-        log = AnswerLog.new
-        log.user_id = self.user_id
-        log.title = self.body
-        log.answer = self
-        log.target_id = self.id
-        log.target_attr = self.body_changed? ? "BODY" : "" if action == "EDIT"
-        log.action = action
-        log.target_parent_id = self.ask_id
-        log.target_parent_title = self.ask.title
-        log.diff = ""
-        log.save
-      rescue Exception => e
-        
+    def insert_add_answer_time_entry
+      time_entry = self.user.time_entries.build
+      time_entry.resource_type = "Answer"
+      time_entry.resource_id = self.id
+      time_entry.target_type = "Ask"
+      time_entry.target_id = self.ask_id
+      time_entry.action = "ADD"
+      time_entry.save!
+    end
+    
+    def insert_update_answer_time_entry
+      time_entry = self.user.time_entries.build
+      time_entry.resource_type = "Answer"
+      time_entry.resource_id = self.id
+      time_entry.target_id = "Ask"
+      time_entry.target_type = self.ask_id
+      
+      if self.body_changed? 
+        time_entry.action = "EDIT_BODY"
+        time_entry.save!
       end
       
+      #time_entry.action = "EDIT"
+    
     end
   
 end
