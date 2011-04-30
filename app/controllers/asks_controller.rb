@@ -11,6 +11,17 @@ class AsksController < ApplicationController
     set_seo_meta("所有问题")
   end
   
+  def new
+    @ask = Ask.new
+    respond_to do |format|
+      format.html # new.html.erb
+      format.json
+    end
+  end
+  
+  def edit
+  end
+  
   def create
     @ask = Ask.find_by_title(params[:ask][:title])
     if @ask

@@ -7,6 +7,7 @@ class User < Techbang::User
 
   has_many :followships,:foreign_key => 'user_id',:class_name => 'Followship'
   has_many :befollowships,:foreign_key => 'follower_id',:class_name => 'Followship'
+  
   has_many :following_users   ,:through => :followships, :source =>  :followshipped
   has_many :followers,:through => :befollowships, :source => :befollowshipped
   
@@ -25,6 +26,7 @@ class User < Techbang::User
   
   has_many :answers
   has_many :logs
+  has_many :time_entries, :foreign_key => "creator_id"
 
   def ask_followed?(ask)
     # Rails.logger.info { "user: #{self.inspect}" }

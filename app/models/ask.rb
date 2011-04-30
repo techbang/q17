@@ -27,6 +27,10 @@ class Ask < ActiveRecord::Base
   has_many :comments, :conditions => {:commentable_type => "Ask"}, :foreign_key => "commentable_id", :class_name => "Comment"
 
   has_many :ask_invites
+  
+  has_many :time_entries
+  after_create :insert_time_entry
+  
 
   attr_protected :user_id
   attr_accessor :current_user_id
@@ -199,6 +203,14 @@ class Ask < ActiveRecord::Base
   end
 
   protected
+  
+    def insert_time_entry
+      time_entry = self.user.time_entries.build
+      time_entry.resource_type = "Topic"
+      time_entry.resource_id = self.id
+      time_entry.action = "ADD"
+      time_entry.save!
+    end
 
     def insert_topic_action_log(action, topic_name, current_user_id)
       #begin
