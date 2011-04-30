@@ -89,22 +89,6 @@ class Ask < ActiveRecord::Base
     insert_action_log("NEW")
   end
 
-  # 敏感词验证
-  before_validation :check_spam_words
-  def check_spam_words
-    if self.spam?("title")
-      return false
-    end
-
-    if self.spam?("body")
-      return false
-    end
-   #TEMP_REMOVE
-   #if self.spam?("topics")
-   #  return false
-   #end
-  end
-
   def chomp_body
     if self.body == "<br>"
       return ""
