@@ -43,11 +43,11 @@ module AsksHelper
   def voted?(answer,type = :up)
     return false if current_user.blank?
     if type == :up
-      return false if answer.up_voter_ids.blank?
-      return answer.up_voter_ids.count(current_user.id) > 0
+      return false if answer.votes_for < 1
+      return current_user.voted_for?(answer)
     else
-      return false if answer.down_voter_ids.blank?
-      return answer.down_voter_ids.count(current_user.id) > 0
+      return false if answer.votes_against < 1
+      return current_user.voted_against?(answer)
     end
   end
 
@@ -79,8 +79,9 @@ module AsksHelper
 
   def thank_answered?(answer)
     return false if current_user.blank?
-    return false if current_user.thanked_answer_ids.blank?
-    return current_user.thanked_answer_ids.count(answer.id) > 0
+    #TODO
+    #return false if current_user.thanked_answer_ids.blank?
+    #return current_user.thanked_answer_ids.count(answer.id) > 0
     return
   end
 

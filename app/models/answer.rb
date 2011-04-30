@@ -1,6 +1,7 @@
 class Answer < ActiveRecord::Base
   include BaseModel
 
+  acts_as_voteable
   # 投票对应的分数
  # voteable self, :up => +1, :down => -1
 

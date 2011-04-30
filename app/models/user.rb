@@ -1,6 +1,7 @@
 class User < Techbang::User
   include Techbang::UserProfileMethods
-
+  acts_as_voter
+  
   attr_accessible :login, :name, :nickname, :email, :fb_user_id, :email_hash , :avatar_file_name , :profile_attributes
   has_many :notifications
 

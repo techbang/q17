@@ -81,14 +81,6 @@ class Ask < ActiveRecord::Base
     end
   end
 
-  def update_log
-    insert_action_log("EDIT") if self.title_changed? or self.body_changed?
-  end
-
-  def create_log
-    insert_action_log("NEW")
-  end
-
   def chomp_body
     if self.body == "<br>"
       return ""

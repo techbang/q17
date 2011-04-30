@@ -1,4 +1,4 @@
-<div id="answer_<%= item.id %>" data-uc="<%= item.up_votes_count %>" data-dc="<%= item.down_votes_count %>"
+<div id="answer_<%= item.id %>" data-uc="<%= item.votes_for %>" data-dc="<%= item.votes_against %>"
     class="answer<%= ' spam_answer' if spam_answer?(item) %>">
   <div class="vote_buttons">
     <% if not owner?(item) %>
