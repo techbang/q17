@@ -152,6 +152,23 @@ class AsksController < ApplicationController
     render :text => "1"
   end
   
+  def share
+    if request.get?
+      if current_user
+        render "share", :layout => false
+      else
+        render_404
+      end
+    else
+      case params[:type]
+      when "email"
+        UserMailer.simple(params[:to], params[:subject], params[:body].gsub("\n","<br />")).deliver
+        @success = true
+        @msg = "已经将问题连接发送到了 #{params[:to]}"
+      end
+    end
+
+  end
 
   
   protected
