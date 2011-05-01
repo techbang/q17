@@ -26,9 +26,8 @@ gem 'simple_form', "1.3.1"
 
 #topic
 gem 'acts-as-taggable-on'#, :git => "git://github.com/xdite/acts-as-taggable-on.git"
-gem 'railstank'
-gem 'indextank'
 gem "delayed_job",  :git => "git://github.com/collectiveidea/delayed_job.git", :tag => "v2.1.4"
+gem "redis-textsearch", :path => "/Users/xdite/projects/redis-textsearch"
 # Deploy with Capistrano
 # gem 'capistrano'
 

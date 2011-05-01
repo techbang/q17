@@ -4,4 +4,5 @@
 require File.expand_path('../config/application', __FILE__)
 require 'rake'
 
+
 Q17::Application.load_tasks

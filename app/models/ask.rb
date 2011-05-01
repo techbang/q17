@@ -1,7 +1,7 @@
 class Ask < ActiveRecord::Base
 
- include BaseModel
-   
+ include Redis::TextSearch
+ 
   # 提问人
   belongs_to :user, :counter_cache => true
   # 对指定人的提问
@@ -55,18 +55,18 @@ class Ask < ActiveRecord::Base
   # 问我的问题
   scope :asked_to, lambda { |to_user_id| where(:to_user_id => to_user_id) }
 
-  #TEMP_REMOVE
-  ## FullText indexes
-  #search_index(:fields => [:title,:topics],
-  #             :attributes => [:title,:topics],
-  #             :options => {} )
+  text_index :title
+  text_index :body
+  text_index :topics , :exact => true
 
-  #redis_search_index(:title_field => :title,:ext_fields => [:topics])
 
   before_save :fill_default_values
   #after_create :create_log
   after_create :send_mails
 
+  after_save do |ask|
+    ask.delay.update_search_indexes
+  end
 
   def view!
     self.class.increment_counter(:views_count, 1)
