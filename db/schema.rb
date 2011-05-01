@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110430230341) do
+ActiveRecord::Schema.define(:version => 20110501070217) do
 
   create_table "answers", :force => true do |t|
     t.text     "body"
@@ -136,6 +136,13 @@ ActiveRecord::Schema.define(:version => 20110430230341) do
   add_index "profiles", ["income"], :name => "index_profiles_on_income"
   add_index "profiles", ["job"], :name => "index_profiles_on_job"
   add_index "profiles", ["zip_code"], :name => "index_profiles_on_zip_code"
+
+  create_table "report_spams", :force => true do |t|
+    t.string   "url"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "taggings", :force => true do |t|
     t.integer  "tag_id"

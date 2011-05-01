@@ -9,6 +9,8 @@ Q17::Application.routes.draw do
   match "/followed" => "pages#followed"
   match "/recommended" => "pages#recommended"
   match "/muted" => "pages#muted"
+  match "/report" => "pages#report"
+  match "/about" => "home#about"
   match "/doing" => "logs#index"
   
   # The priority is based upon order of creation:
