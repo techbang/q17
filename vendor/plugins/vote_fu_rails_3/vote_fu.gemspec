@@ -31,6 +31,6 @@ Gem::Specification.new do |s|
               "examples/votes/_voteable_vote.html.erb",
               "examples/votes/create.rjs",
               "examples/routes.rb", 
-              "rails/init.rb"
+              "init.rb"
   ]
 end

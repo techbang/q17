@@ -13,8 +13,6 @@ class AnswersController < ApplicationController
       success = current_user.vote_for(@answer)
     end
     
-    #success = @answer.vote(:voter_id => current_user.id, :value => vote_type)
-    
     if params[:inc] == "1"
       begin
         log = UserLog.new
