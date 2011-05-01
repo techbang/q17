@@ -4,7 +4,6 @@ class AsksController < ApplicationController
   before_filter :require_user_text, :only => [:update_topic,:redirect,:spam, :mute, :unmute, :follow, :unfollow]
   before_filter :find_ask, :only => [ :show , :redirect, :share, :spam, :spam, :edit, :update , :update_topic, :mute, :unmute, :follow, :unfollow ]
   
-  
   def index
     @per_page = 20
     @asks = Ask.normal.recent.includes(:user).paginate(:page => params[:page], :per_page => @per_page)
@@ -177,6 +176,21 @@ class AsksController < ApplicationController
       end
     end
 
+  end
+  
+  def invite_to_answer
+    drop = params[:drop] == "1" ? true : false
+    if drop
+      result = AskInvite.cancel(params[:i_id], current_user.id)
+      render :text => "1"
+    else
+      if (current_user.id.to_s != params[:user_id].to_s)
+        @invite = AskInvite.invite(params[:id], params[:user_id], current_user.id)
+        @success = true
+      else
+        @success = false
+      end
+    end
   end
 
   

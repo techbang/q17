@@ -27,6 +27,8 @@ class Ask < ActiveRecord::Base
   has_many :comments, :conditions => {:commentable_type => "Ask"}, :foreign_key => "commentable_id", :class_name => "Comment"
 
   has_many :ask_invites
+  has_many :invitors , :through => :ask_invites, :source => :user
+  has_many :be_invitors , :through => :ask_invites, :source => :be_invitor
   
   has_many :time_entries
   after_create :insert_add_ask_time_entry

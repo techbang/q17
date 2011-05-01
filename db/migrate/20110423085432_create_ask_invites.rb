@@ -5,7 +5,7 @@ class CreateAskInvites < ActiveRecord::Migration
       t.integer :user_id
       t.integer :count , :default => 0
       t.integer :mail_sent, :default => 0
-      t.string :invitor_ids  # Array
+      t.integer :be_invitor_id
       t.timestamps
     end
   end

@@ -1,7 +1,9 @@
 class AskInvite < ActiveRecord::Base
-  include Mongoid::Document
+  #include Mongoid::Document
 
   belongs_to :ask
+  belongs_to :user
+  belongs_to :be_invitor, :foreign_key => "be_invitor_id", :class_name => "User"
   #belongs_to :user
   # 多少人邀请
   #field :count, :type => Integer, :default => 0
@@ -10,7 +12,7 @@ class AskInvite < ActiveRecord::Base
   #field :mail_sent, :type => Integer, :default => 0
   #index :ask_id
 
-  scope :unsend, where(:mail_sent => 0, :count.gt => 0)
+  #scope :unsend, where(:mail_sent => 0, :count.gt => 0)
 
   def self.insert_log(ask_id, user_id, invitor_id)
     begin
@@ -48,7 +50,7 @@ class AskInvite < ActiveRecord::Base
     item.save
 
     # 插入 Log 和 Notification
-    insert_log(ask_id, user_id, invitor_id)
+    #insert_log(ask_id, user_id, invitor_id)
     item
   end
 

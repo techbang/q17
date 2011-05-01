@@ -28,9 +28,9 @@ ActiveRecord::Schema.define(:version => 20110501124251) do
   create_table "ask_invites", :force => true do |t|
     t.integer  "ask_id"
     t.integer  "user_id"
-    t.integer  "count",       :default => 0
-    t.integer  "mail_sent",   :default => 0
-    t.string   "invitor_ids"
+    t.integer  "count",         :default => 0
+    t.integer  "mail_sent",     :default => 0
+    t.integer  "be_invitor_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
