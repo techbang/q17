@@ -55,7 +55,7 @@ when "AskLog"
           <% else %>
           • <a href="#" onclick="return Asks.simple_follow(this,'<%= item.id %>')">关注</a> 
           <% end %>
-          <% if current_user.ask_muted?(item.id) %>
+          <% if current_user.ask_muted?(item) %>
           • <a href="#" onclick="return Asks.unmute(this,'<%= item.id %>')">取消屏蔽</a> 
           <% else %>
           • <a href="#" onclick="return Asks.mute(this,'<%= item.id %>')">不感兴趣</a> 
@@ -106,7 +106,7 @@ when "UserLog"
           <% else %>
           • <a href="#" onclick="return Asks.simple_follow(this,'<%= item.id %>')">关注</a> 
           <% end %>
-          <% if current_user.ask_muted?(item.id) %>
+          <% if current_user.ask_muted?(item) %>
           • <a href="#" onclick="return Asks.unmute(this,'<%= item.id %>')">取消屏蔽</a> 
           <% else %>
           • <a href="#" onclick="return Asks.mute(this,'<%= item.id %>')">不感兴趣</a> 
@@ -157,7 +157,7 @@ when "AnswerLog"
 					<% else %>
 					• <a href="#" onclick="return Asks.simple_follow(this,'<%= item.id %>')">关注</a> 
 					<% end %>
-					<% if current_user.ask_muted?(item.id) %>
+					<% if current_user.ask_muted?(item) %>
 					• <a href="#" onclick="return Asks.unmute(this,'<%= item.id %>')">取消屏蔽</a> 
 					<% else %>
 	      	• <a href="#" onclick="return Asks.mute(this,'<%= item.id %>')">不感兴趣</a> 

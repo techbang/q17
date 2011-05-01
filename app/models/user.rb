@@ -40,15 +40,12 @@ class User < Techbang::User
   text_index :nickname
 
   def ask_followed?(ask)
-    # Rails.logger.info { "user: #{self.inspect}" }
-    # Rails.logger.info { "asks: #{self.followed_asks.inspect}" }
-    # Rails.logger.info { "ask: #{ask.inspect}" }
     self.followed_asks.include?(ask)
   end
 
   # 不感兴趣问题
-  def ask_muted?(ask_id)
-    self.muted_ask_ids.include?(ask_id)
+  def ask_muted?(ask)
+    self.muted_ask.include?(ask)
   end
 
   def suggest_items

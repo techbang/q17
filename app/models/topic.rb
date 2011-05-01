@@ -26,6 +26,7 @@ class Topic < ActsAsTaggableOn::Tag
   # 以下两个方法是给 redis search index 用
   
   text_index :name
+  text_index :summary
   
   after_save do |topic|
     topic.update_text_indexes
