@@ -30,6 +30,7 @@ class User < Techbang::User
   has_many :thanking_answers, :through => :thanking_ships, :source => :answer
 
   has_many :answers
+  has_many :asks
   has_many :logs
   has_many :time_entries, :foreign_key => "creator_id"
   

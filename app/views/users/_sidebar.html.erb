@@ -38,11 +38,11 @@
 	<div class="user-regdate">注册于 <%= l user.created_at.to_date, :format => :long %></div>
 </div>
 
-<% if @user.following_topics.size > 0 %>
+<% if @user.followed_topics.size > 0 %>
 <div class="box gray">
-	<h2>关注 <a href="<%= following_topics_user_path(@user.slug) %>"><%= @user.following_topics.size %>个话题</a></h2>
+	<h2>关注 <a href="<%= followed_topics_user_path(@user.slug) %>"><%= @user.followed_topics.size %>个话题</a></h2>
 	<ul class="followed-item">
-		<% for topic in @user.following_topics.limit(7) %>
+		<% for topic in @user.followed_topics.limit(7) %>
 		<%= render "topic", :topic => topic %>
 		<% end %>
 	</ul>
