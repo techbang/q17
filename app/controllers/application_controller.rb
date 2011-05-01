@@ -83,16 +83,6 @@ class ApplicationController < ActionController::Base
     end
   end
   
-  def store_location
-    session[:return_to] = request.request_uri
-  end
-  
-  def redirect_back_or_default(default)
-    redirect_to(session[:return_to] || default)
-    session[:return_to] = nil
-  end
-  
-  
   def tag_options(options, escape = true)
     unless options.blank?
       attrs = []

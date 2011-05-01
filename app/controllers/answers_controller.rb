@@ -41,6 +41,11 @@ class AnswersController < ApplicationController
     render :text => count
   end
   
+  def thank
+    current_user.thank_answer(@answer)
+    render :text => "1"
+  end
+  
   protected
 
    def find_answer

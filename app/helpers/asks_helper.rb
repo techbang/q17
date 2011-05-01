@@ -79,6 +79,8 @@ module AsksHelper
 
   def thank_answered?(answer)
     return false if current_user.blank?
+    return false if current_user.thanking_answers.blank?
+    return current_user.thanking_answers.include?(answer)
     #TODO
     #return false if current_user.thanked_answer_ids.blank?
     #return current_user.thanked_answer_ids.count(answer.id) > 0

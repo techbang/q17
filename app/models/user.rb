@@ -24,6 +24,9 @@ class User < Techbang::User
 
   has_many :muted_ask_ships
   has_many :muted_asks, :through => :muted_ask_ships, :source => :ask
+  
+  has_many :thanking_ships
+  has_many :thanking_answers, :through => :thanking_ships, :source => :answer
 
   has_many :answers
   has_many :logs
@@ -82,6 +85,11 @@ class User < Techbang::User
   def unfollow_topic(topic)
     self.followed_topics.delete(topic)
   end
+  
+  def thank_answer(answer)
+    self.thanking_answers << answer
+    #insert_follow_log("THANK_ANSWER", answer, answer.ask)
+  end
 
 
   protected
@@ -126,25 +134,6 @@ class User < Techbang::User
     end
 end
 
-# == Schema Information
-#
-# Table name: users
-#
-#  id               :integer(4)      not null, primary key
-#  login            :string(40)
-#  name             :string(100)     default("")
-#  nickname         :string(40)
-#  slug             :string(40)
-#  sex              :string(255)
-#  email            :string(100)
-#  fb_user_id       :integer(8)
-#  email_hash       :string(255)
-#  avatar_file_name :string(255)
-#  role_id          :integer(4)
-#  is_agreed        :boolean(1)
-#  created_at       :datetime
-#  updated_at       :datetime
-#
 
 # == Schema Information
 #
