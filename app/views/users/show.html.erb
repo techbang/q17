@@ -5,7 +5,7 @@
 			$(el).attr("onclick", "return false;");
 			$.get("/users/"+id+"/follow",{}, function(res){
         App.loading(false);
-        $(el).replaceWith('<a href="#" style="width:80px;" class="gray_button" onclick="return unfollow(this, \'<%= @user.slug %>\');">取消关注</a>');
+        $(el).replaceWith('<a href="#" style="width:80px;" class="gray_button" onclick="return unfollow(this, \'<%= @user.nickname %>\');">取消关注</a>');
 	    });
       return false;
     }
@@ -15,7 +15,7 @@
 			$(el).attr("onclick", "return false;");
 			$.get("/users/"+id+"/unfollow",{}, function(res){
         App.loading(false);
-        $(el).replaceWith('<a href="#" style="width:80px;" class="gray_button green_button" onclick="return follow(this, \'<%= @user.slug %>\');">关注</a>');
+        $(el).replaceWith('<a href="#" style="width:80px;" class="gray_button green_button" onclick="return follow(this, \'<%= @user.nickname %>\');">关注</a>');
 	    });
       return false;
     }

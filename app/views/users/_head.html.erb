@@ -37,13 +37,13 @@
 </div>
 
 <div class="tabs">
-  <a<%= ' class=actived' if params[:action] == "show" %> href="<%= user_path(user.slug) %>">主页</a>
-	<a<%= ' class=actived' if params[:action] == "asked_to" %> href="<%= asked_to_user_path(user.slug) %>">问<%= current_user == user ? "我" : (user.girl ? "她" : "他") %>(<%= Ask.normal.asked_to(user.id).count %>)</a>
-  <a<%= ' class=actived' if params[:action] == "asked" %> href="<%= asked_user_path(user.slug) %>">问过(<%= user.asks_count %>)</a>
-  <a<%= ' class=actived' if params[:action] == "answered" %> href="<%= answered_user_path(user.slug) %>">回答过(<%= user.answered_ask_ids.count %>)</a>
-	<!-- <a<%= ' class=actived' if params[:action] == "following" %> href="<%= following_user_path(user.slug) %>">关注(<%= user.followers.count %>)</a>
-		<a<%= ' class=actived' if params[:action] == "followers" %> href="<%= followers_user_path(user.slug) %>">被关注(<%= user.follower_ids.count %>)</a> -->
-	<a<%= ' class=actived' if params[:action] == "following_topics" %> href="<%= following_topics_user_path(user.slug) %>">关注的话题(<%= user.followed_topic_ids.count %>)</a>
+  <a<%= ' class=actived' if params[:action] == "show" %> href="<%= user_path(user.nickname) %>">主页</a>
+	<a<%= ' class=actived' if params[:action] == "asked_to" %> href="<%= asked_to_user_path(user.nickname) %>">问<%= current_user == user ? "我" : (user.sex ? "她" : "他") %>(<%= Ask.normal.asked_to(user.id).count %>)</a>
+  <a<%= ' class=actived' if params[:action] == "asked" %> href="<%= asked_user_path(user.nickname) %>">问过(<%= user.asks_count %>)</a>
+  <a<%= ' class=actived' if params[:action] == "answered" %> href="<%= answered_user_path(user.nickname) %>">回答过(<%= user.answered_ask_ids.count %>)</a>
+	<!-- <a<%= ' class=actived' if params[:action] == "following" %> href="<%= following_user_path(user.nickname) %>">关注(<%= user.followers.count %>)</a>
+		<a<%= ' class=actived' if params[:action] == "followers" %> href="<%= followers_user_path(user.nickname) %>">被关注(<%= user.follower_ids.count %>)</a> -->
+	<a<%= ' class=actived' if params[:action] == "following_topics" %> href="<%= following_topics_user_path(user.nickname) %>">关注的话题(<%= user.followed_topic_ids.count %>)</a>
 </div>
 
 <% if not owner? user %>

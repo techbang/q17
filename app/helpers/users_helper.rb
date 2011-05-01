@@ -39,7 +39,7 @@ module UsersHelper
     if current_user
       return "我" if user.id == current_user.id
     end
-    user.girl.blank? == true ? "他" : "她"
+    user.sex.blank? == true ? "他" : "她"
   end
   
 end

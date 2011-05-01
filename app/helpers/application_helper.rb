@@ -25,7 +25,7 @@ module ApplicationHelper
       when "Ask"
         link_to(item.title, ask_path(item))
       when "User", "Techbang::User"
-        link_to(item.name, user_path(item))
+        link_to(item.nickname, user_path(item.nickname))
       when "Answer"
         link_to(item.ask.title, ask_path(item.ask))
       end

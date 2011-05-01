@@ -2,6 +2,7 @@
   <%= render "head", :user => @user %>
 </div>
 <ul class="followed-item topic-listing">
+	
   <% @topics.each do |item| %>
     <%= render "topic", :topic => item %>
   <% end %>

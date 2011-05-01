@@ -74,7 +74,7 @@ class UsersController < ApplicationController
   
   def following
     @per_page = 20
-    @followers = @user.following.order("id DESC").paginate(:page => params[:page], :per_page => @per_page)
+    @followers = @user.following_users.order("id DESC").paginate(:page => params[:page], :per_page => @per_page)
     
     set_seo_meta("#{@user.name}关注的人")
     if params[:format] == "js"

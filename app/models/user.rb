@@ -70,6 +70,10 @@ class User < Techbang::User
   def unmute_ask(ask)
     self.muted_asks.delete(ask)
   end
+  
+  def followed?(user)
+    self.following_users.include?(user)
+  end
 
   def follow(user)
     self.following_users << user
