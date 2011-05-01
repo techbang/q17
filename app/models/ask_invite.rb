@@ -4,13 +4,7 @@ class AskInvite < ActiveRecord::Base
   belongs_to :ask
   belongs_to :user
   belongs_to :be_invitor, :foreign_key => "be_invitor_id", :class_name => "User"
-  #belongs_to :user
-  # 多少人邀请
-  #field :count, :type => Integer, :default => 0
-  # 邀请者
-  #field :invitor_ids, :type => Array, :default => []
-  #field :mail_sent, :type => Integer, :default => 0
-  #index :ask_id
+
 
   #scope :unsend, where(:mail_sent => 0, :count.gt => 0)
 
@@ -30,24 +24,32 @@ class AskInvite < ActiveRecord::Base
   end
 
   def self.invite(ask_id,user_id,invitor_id)
-    item = find_or_create_by(:ask_id => ask_id,:user_id => user_id)
-    user = item.user
-    return -1 if user.blank?
-    item.invitor_ids ||= []
-    item.count ||= 0
-    return item if item.invitor_ids.include?(invitor_id)
-    item.invitor_ids << invitor_id
-    item.count += 1
-
-    # 发送邮件
-    if(item.mail_sent <= 1)
-      if item.user.mail_invite_to_ask
-        UserMailer.invite_to_answer(item.ask_id, item.user_id, item.invitor_ids).deliver
-      end
-      item.mail_sent += 1
+    item = find_or_initialize_by_ask_id_and_user_id_and_be_invitor_id(ask_id,user_id,invitor_id )
+    if item.new_record?
+      item.save
+      # SEND MAIL
+    else
+      # NOT SEND MAIL
     end
+    
+   #item = find_or_create_by(:ask_id => ask_id,:user_id => user_id)
+   #user = item.user
+   #return -1 if user.blank?
+   #item.invitor_ids ||= []
+   #item.count ||= 0
+   #return item if item.invitor_ids.include?(invitor_id)
+   #item.invitor_ids << invitor_id
+   #item.count += 1
+   #
+   ## 发送邮件
+   #if(item.mail_sent <= 1)
+   #  if item.user.mail_invite_to_ask
+   #    UserMailer.invite_to_answer(item.ask_id, item.user_id, item.invitor_ids).deliver
+   #  end
+   #  item.mail_sent += 1
+   #end
 
-    item.save
+  #  item.save
 
     # 插入 Log 和 Notification
     #insert_log(ask_id, user_id, invitor_id)
