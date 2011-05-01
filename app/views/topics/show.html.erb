@@ -13,9 +13,10 @@
 
   </script>
 <% end %>
+
 <div id="topic" class="clearfix">
   <div class="cover topic_cover">
-    <%# image_tag(@topic.cover.normal.url) %>
+    <%= image_tag(@topic.cover.url(:normal)) %>
     <div class="edit"><a href="#">修改图片</a></div>
   </div>
   <div id="edit_topic_cover" style="display:none">

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110501073849) do
+ActiveRecord::Schema.define(:version => 20110501124251) do
 
   create_table "answers", :force => true do |t|
     t.text     "body"
@@ -173,13 +173,17 @@ ActiveRecord::Schema.define(:version => 20110501073849) do
   add_index "taggings", ["taggable_id", "taggable_type", "context"], :name => "index_taggings_on_taggable_id_and_taggable_type_and_context"
 
   create_table "tags", :force => true do |t|
-    t.string  "name"
-    t.text    "summary"
-    t.text    "conver"
-    t.integer "asks_count", :default => 0
-    t.integer "ask_id"
-    t.string  "cover"
-    t.string  "string"
+    t.string   "name"
+    t.text     "summary"
+    t.text     "conver"
+    t.integer  "asks_count",         :default => 0
+    t.integer  "ask_id"
+    t.string   "string"
+    t.string   "cover_file_name"
+    t.string   "cover_content_type"
+    t.integer  "cover_file_size"
+    t.datetime "cover_updated_at"
+    t.datetime "created_at"
   end
 
   create_table "thanking_ships", :force => true do |t|

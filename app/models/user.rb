@@ -34,7 +34,7 @@ class User < Techbang::User
   has_many :time_entries, :foreign_key => "creator_id"
   
   after_save do |user|
-    user.delay.update_search_indexes if user.nickname_changed?
+    user.delay.update_text_indexes if user.nickname_changed?
   end
 
   text_index :nickname

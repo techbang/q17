@@ -3,8 +3,15 @@ class Topic < ActsAsTaggableOn::Tag
   include Redis::TextSearch
    
   attr_accessor :current_user_id, :cover_changed, :followers_count_changed
-  attr_accessible :name, :summary, :current_user_id
+  attr_accessible :name, :summary, :current_user_id, :cover, :cover_file_name
   #field :cover
+
+  has_attached_file :cover, 
+  :path => ":rails_root/public/system/:class/:id/:style/:filename",
+  :url => "/system/:class/:id/:style/:filename",
+  :default_url => "/images/missing.png",
+  :styles => { :normal => "100x100>"}
+
 
   #field :asks_count, :type => Integer, :default => 0
 
@@ -56,11 +63,11 @@ class Topic < ActsAsTaggableOn::Tag
   #redis_search_index(:title_field => :name,
   #                   :ext_fields => [:followers_count,:cover_small])
 
-  # Hack 上传图片，用于记录 cover 是否改变过
-  def cover=(obj)
-    super(obj)
-    self.cover_changed = true
-  end
+ # # Hack 上传图片，用于记录 cover 是否改变过
+ # def cover=(obj)
+ #   super(obj)
+ #   self.cover_changed = true
+ # end
 
   before_update :insert_update_topic_time_entry
   
