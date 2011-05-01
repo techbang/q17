@@ -1,4 +1,13 @@
 GIT
+  remote: git://github.com/collectiveidea/delayed_job.git
+  revision: 8dc3930f20eb7363ef0d451ac05a3851eb0caaf6
+  tag: v2.1.4
+  specs:
+    delayed_job (2.1.4)
+      activesupport (~> 3.0)
+      daemons
+
+GIT
   remote: git@github.com:techbang/techbang-authentication.git
   revision: 4a6229194ae7bd3830d4876cd7fa07335c2db09b
   tag: 0.0.5
@@ -36,18 +45,29 @@ GEM
       activesupport (= 3.0.5)
     activesupport (3.0.5)
     acts-as-taggable-on (2.0.6)
+    addressable (2.2.5)
     annotate (2.4.0)
     arel (2.0.9)
     builder (2.1.2)
     crack (0.1.8)
+    daemons (1.1.3)
     erubis (2.6.6)
       abstract (>= 1.0.0)
     facebooker2 (0.0.11)
       mogli (>= 0.0.12)
       ruby-hmac
+    faraday (0.6.1)
+      addressable (~> 2.2.4)
+      multipart-post (~> 1.1.0)
+      rack (>= 1.1.0, < 2)
+    faraday-stack (0.1.0)
+      faraday (~> 0.6)
     httparty (0.7.4)
       crack (= 0.1.8)
     i18n (0.5.0)
+    indextank (1.0.9.1)
+      faraday-stack
+      yajl-ruby (>= 0.7.7)
     json (1.4.6)
     json_pure (1.5.1)
     mail (2.2.17)
@@ -58,6 +78,7 @@ GEM
     mime-types (1.16)
     mogli (0.0.27)
       httparty (>= 0.4.3)
+    multipart-post (1.1.0)
     mysql2 (0.2.7)
     paperclip (2.3.10)
       activerecord (>= 2.3.0)
@@ -76,6 +97,9 @@ GEM
       activesupport (= 3.0.5)
       bundler (~> 1.0)
       railties (= 3.0.5)
+    railstank (0.1.0)
+      indextank
+      indextank (>= 1.0.9.1)
     railties (3.0.5)
       actionpack (= 3.0.5)
       activesupport (= 3.0.5)
@@ -107,6 +131,7 @@ GEM
     vegas (0.1.8)
       rack (>= 1.0.0)
     will_paginate (2.3.15)
+    yajl-ruby (0.8.2)
 
 PLATFORMS
   ruby
@@ -114,11 +139,14 @@ PLATFORMS
 DEPENDENCIES
   acts-as-taggable-on
   annotate
+  delayed_job!
   facebooker2 (>= 0.0.10)
+  indextank
   json_pure
   mysql2
   paperclip
   rails (= 3.0.5)
+  railstank
   resque
   resque_mailer
   rubycas-client

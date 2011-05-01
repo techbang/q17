@@ -1,5 +1,6 @@
 class User < Techbang::User
   include Techbang::UserProfileMethods
+  include Railstank::Search
   acts_as_voter
   
   attr_accessible :login, :name, :nickname, :email, :fb_user_id, :email_hash , :avatar_file_name , :profile_attributes
@@ -31,6 +32,12 @@ class User < Techbang::User
   has_many :answers
   has_many :logs
   has_many :time_entries, :foreign_key => "creator_id"
+  
+  after_save do |user|
+    user.delay.update_search_index if user.nickname_changed?
+  end
+
+  has_indextank :q17_user_index, :index_class_name => "User"
 
   def ask_followed?(ask)
     # Rails.logger.info { "user: #{self.inspect}" }
@@ -91,6 +98,12 @@ class User < Techbang::User
     #insert_follow_log("THANK_ANSWER", answer, answer.ask)
   end
 
+  def update_search_index
+    add_to_search_index({
+      :user_id => id,
+      :nickname => nickname
+    })
+  end
 
   protected
   
@@ -132,6 +145,8 @@ class User < Techbang::User
       time_entry.action = "DELETE"
       time_entry.save!
     end
+    
+
 end
 
 

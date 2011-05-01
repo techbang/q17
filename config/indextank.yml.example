@@ -1,0 +1,12 @@
+development: &DEV
+  api_url: "your api key"
+  
+test:
+  <<: *DEV
+
+staging:
+  api_url: "your api key"
+
+production:
+  api_url: "your api key"
+
