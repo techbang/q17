@@ -1,6 +1,6 @@
 class Ask < ActiveRecord::Base
 
- include Redis::TextSearch
+  include Redis::TextSearch
  
   # 提问人
   belongs_to :user, :counter_cache => true
@@ -65,7 +65,7 @@ class Ask < ActiveRecord::Base
   after_create :send_mails
 
   after_save do |ask|
-    ask.delay.update_search_indexes
+    ask.update_text_indexes
   end
 
   def view!

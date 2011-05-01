@@ -1,6 +1,7 @@
 class Topic < ActsAsTaggableOn::Tag
-  include BaseModel
-  
+
+  include Redis::TextSearch
+   
   attr_accessor :current_user_id, :cover_changed, :followers_count_changed
   attr_accessible :name, :summary, :current_user_id
   #field :cover
@@ -19,6 +20,12 @@ class Topic < ActsAsTaggableOn::Tag
   validates_uniqueness_of :name, :case_insensitive => true
 
   # 以下两个方法是给 redis search index 用
+  
+  text_index :name
+  
+  after_save do |topic|
+    topic.update_text_indexes
+  end
   
   def to_param
     "#{name}"

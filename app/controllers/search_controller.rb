@@ -4,7 +4,7 @@ class SearchController < ApplicationController
     result = Search.query(params[:q].strip,:limit => 10)
     lines = []
     result.each do |item|
-      case item['type']
+      case item.class.to_s
       when "Ask"
         lines << complete_line_ask(item)
       when "User"
@@ -14,6 +14,8 @@ class SearchController < ApplicationController
       end
     end
     render :text => lines.join("\n")
+
+
   end
 
   def users
@@ -31,30 +33,19 @@ class SearchController < ApplicationController
   end
 
   private
-    def complete_line_ask(item,hash = true)
-      if hash
-        "#{item['title']}#!##{item['id']}#!##{item['topics'].join(',')}#!#Ask"
-      else
-        "#{item.title.gsub("\n",'')}#!##{item.id}#!##{item.topics.join(',')}#!#Ask"
-      end
+    def complete_line_ask(item)
+      "#{item.title.gsub("\n",'')}#!##{item.id}#!##{item.topics.join(',')}#!#Ask"
     end
 
-    def complete_line_topic(item,hash = true)
-      if hash
-        "#{item['title']}#!##{item['followers_count']}#!##{item['cover_small']}#!#Topic"
-      else
-        "#{item.name}#!##{item.followers_count}#!##{item.cover_small}#!#Topic"
-      end
+    def complete_line_topic(item)
+      # "#{item['title']}#!##{item['followers_count']}#!##{item['cover_small']}#!#Topic"
+      "#{item.name}#!##{item.followers_count}#!##{item.id }#!#Topic"
+      # TODO :cover
     end
 
-    def complete_line_user(item,hash = true)
-      if hash
-        "#{item['title']}#!##{item['id']}#!##{item['tagline']}#!##{item['avatar_small']}#!##{item['slug']}#!#User"
-      else
-        # TODO
-        # "#{item.name}#!##{item.id}#!##{item.tagline}#!##{item.avatar_small}#!##{item.slug}#!#User"
-        "#{item.nickname}#!##{item.id}#!##{item.id}#!##{item.id}#!##{item.id}#!#User"
-      end
+    def complete_line_user(item)
+      # "#{item.name}#!##{item.id}#!##{item.tagline}#!##{item.avatar_small}#!##{item.slug}#!#User"
+      "#{item.nickname}#!##{item.id}#!##{item.id}#!##{item.id}#!##{item.id}#!#User"
     end
 
 end
