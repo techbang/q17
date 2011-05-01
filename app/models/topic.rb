@@ -4,18 +4,15 @@ class Topic < ActsAsTaggableOn::Tag
    
   attr_accessor :current_user_id, :cover_changed, :followers_count_changed
   attr_accessible :name, :summary, :current_user_id, :cover, :cover_file_name
-  #field :cover
-
+  
   has_attached_file :cover, 
-  :path => ":rails_root/public/system/:class/:id/:style/:filename",
-  :url => "/system/:class/:id/:style/:filename",
-  :default_url => "/images/missing.png",
-  :styles => { :normal => "100x100>"}
+    :path => ":rails_root/public/system/:class/:id/:style/:filename",
+    :url => "/system/:class/:id/:style/:filename",
+    :default_url => "/images/missing.png",
+    :styles => { :normal => "100x100>"}
 
 
   #field :asks_count, :type => Integer, :default => 0
-
-  has_many :logs, :class_name => "Log", :foreign_key => "target_id"
   
   # Followers
   
@@ -54,29 +51,8 @@ class Topic < ActsAsTaggableOn::Tag
     self.cover_changed?
   end
 
-  # FullText indexes
-  #search_index(:fields => [:name],
-  #             :attributes => [:name,:cover_small, :followers_count],
-  #             :attribute_types => {:cover_small => String, :followers_count => Integer},
-  #             :options => {} )
-
-  #redis_search_index(:title_field => :name,
-  #                   :ext_fields => [:followers_count,:cover_small])
-
- # # Hack 上传图片，用于记录 cover 是否改变过
- # def cover=(obj)
- #   super(obj)
- #   self.cover_changed = true
- # end
-
   before_update :insert_update_topic_time_entry
   
-  def update_log
-   # return  if self.current_user_id.blank?
-   #insert_update_topic_time_entry if self.summary_changed?
-   # insert_action_log("EDIT") #if self.cover_changed or self.summary_changed?
-  end
-
   def self.find_by_name(name)
     #TODO : #4423
     #find(:first,:conditions => {:name => /^#{name.downcase}$/i})
