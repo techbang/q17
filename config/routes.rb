@@ -18,7 +18,19 @@ Q17::Application.routes.draw do
 
 
   resources :user_registrations, :controller => "registrations"
-  resources :users
+  resources :users do
+    member do
+      get "answered"
+      get "asked"
+      get "asked_to"
+      get "follow"
+      get "unfollow"
+      get "followers"
+      get "following"
+      get "following_topics"
+      get "following_asks"
+    end
+  end
   resources :asks do
     member do
       get "spam"

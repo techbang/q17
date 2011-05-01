@@ -36,6 +36,12 @@ class User < Techbang::User
   after_save do |user|
     user.delay.update_text_indexes if user.nickname_changed?
   end
+  
+  has_attached_file :avatar, 
+    :path => ":rails_root/public/system/:class/:id/:style/:filename",
+    :url => "/system/:class/:id/:style/:filename",
+    :default_url => "/images/missing.png",
+    :styles => { :normal => "100x100>", :small => "25x25>"}
 
   text_index :nickname
 
@@ -45,7 +51,7 @@ class User < Techbang::User
 
   # 不感兴趣问题
   def ask_muted?(ask)
-    self.muted_ask.include?(ask)
+    self.muted_asks.include?(ask)
   end
 
   def suggest_items

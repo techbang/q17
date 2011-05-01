@@ -6,7 +6,7 @@ class CreateAsks < ActiveRecord::Migration
       t.datetime  :answered_at
       t.integer   :answers_count , :default => 0
       t.integer   :comments_count, :default => 0
-      
+      t.integer   :to_user_id
       t.string    :topic # Array
       t.integer   :spams_count, :default => 0
       t.string    :spam_voter_ids # Array

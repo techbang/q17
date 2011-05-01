@@ -9,6 +9,7 @@ public/javascripts/cached_*
 public/stylesheets/cached_*
 public/google*.html
 public/about.html
+public/system
 db/sphinx
 db/dict/*.lib
 db/dict/thesaurus.txt

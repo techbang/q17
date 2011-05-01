@@ -49,6 +49,7 @@ ActiveRecord::Schema.define(:version => 20110501124251) do
     t.datetime "answered_at"
     t.integer  "answers_count",       :default => 0
     t.integer  "comments_count",      :default => 0
+    t.integer  "to_user_id"
     t.string   "topic"
     t.integer  "spams_count",         :default => 0
     t.string   "spam_voter_ids"
@@ -221,21 +222,25 @@ ActiveRecord::Schema.define(:version => 20110501124251) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "login",            :limit => 40
-    t.string   "name",             :limit => 100, :default => ""
-    t.string   "nickname",         :limit => 40
-    t.string   "slug",             :limit => 40
+    t.string   "login",               :limit => 40
+    t.string   "name",                :limit => 100, :default => ""
+    t.string   "nickname",            :limit => 40
+    t.string   "slug",                :limit => 40
     t.string   "sex"
-    t.string   "email",            :limit => 100
-    t.integer  "fb_user_id",       :limit => 8
+    t.string   "email",               :limit => 100
+    t.integer  "fb_user_id",          :limit => 8
     t.string   "email_hash"
     t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
     t.integer  "role_id"
     t.boolean  "is_agreed"
+    t.boolean  "deleted"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "asks_count",                      :default => 0
-    t.integer  "answers_count",                   :default => 0
+    t.integer  "asks_count",                         :default => 0
+    t.integer  "answers_count",                      :default => 0
     t.string   "tagline"
   end
 

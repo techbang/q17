@@ -10,8 +10,12 @@ class CreateUsers < ActiveRecord::Migration
       t.integer    :fb_user_id,       :limit => 20
       t.string     :email_hash
       t.string     :avatar_file_name
+      t.column     :avatar_content_type, :string
+      t.column     :avatar_file_size,    :integer
+      t.column     :avatar_updated_at,   :datetime
       t.integer    :role_id
       t.boolean    :is_agreed
+      t.boolean    :deleted
       t.timestamps
     end
 

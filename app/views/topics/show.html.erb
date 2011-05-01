@@ -68,6 +68,7 @@
 		<div class="box standard gray">
 			<h2>最近关注此话题的人</h2>
 			<div class="inner">
+				
 				<div class="followers">
 					<% for follower in @topic.followers.limit(40) %>
 					<a href="/users/<%= follower.slug %>" title="<%= follower.name %>">
