@@ -1,6 +1,6 @@
 require 'redis'
 require 'redis/text_search'
-
+require 'redis/objects'
 path = "#{Rails.root}/config/redis.yml"
 
 if File.exist?(path)
@@ -12,7 +12,7 @@ if File.exist?(path)
   db_number  = config["db"]
 
   if redis_host.present? && redis_port.present? && db_number.present?
-    #Redis::Objects.redis = Redis.new(:host => redis_host, :port => redis_port, :db => db_number)
+    Redis::Objects.redis = Redis.new(:host => redis_host, :port => redis_port, :db => db_number)
     Redis::TextSearch.redis = Redis.new(:host => 'localhost', :port => 6379)
   else
     puts "Incorrect redis config - #{path} (#{Rails.env})"

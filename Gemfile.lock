@@ -8,6 +8,14 @@ GIT
       daemons
 
 GIT
+  remote: git://github.com/techbang/redis-objects.git
+  revision: 5c3a5e09cffd3c8800f2e9d41951a3ae99000435
+  ref: 5c3a5e09cffd3c8800f2
+  specs:
+    redis-objects (0.5.0)
+      redis (>= 2.1.1)
+
+GIT
   remote: git@github.com:techbang/techbang-authentication.git
   revision: 4a6229194ae7bd3830d4876cd7fa07335c2db09b
   tag: 0.0.5
@@ -137,6 +145,7 @@ DEPENDENCIES
   mysql2
   paperclip
   rails (= 3.0.5)
+  redis-objects!
   redis-textsearch!
   resque
   resque_mailer

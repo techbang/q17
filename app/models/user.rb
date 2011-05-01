@@ -1,6 +1,8 @@
 class User < Techbang::User
   include Techbang::UserProfileMethods
   include Redis::TextSearch
+  include Redis::Objects
+
   acts_as_voter
   
   attr_accessible :login, :name, :nickname, :email, :fb_user_id, :email_hash , :avatar_file_name , :profile_attributes
@@ -30,9 +32,15 @@ class User < Techbang::User
   has_many :thanking_answers, :through => :thanking_ships, :source => :answer
 
   has_many :answers
-  has_many :asks
+  #has_many :asks
   has_many :logs
   has_many :time_entries, :foreign_key => "creator_id"
+  
+  value :mail_be_followed
+  value :mail_new_answer
+  value :mail_invite_to_ask
+  value :mail_ask_me
+
   
   after_save do |user|
     user.delay.update_text_indexes if user.nickname_changed?

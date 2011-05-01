@@ -16,6 +16,7 @@ gem "paperclip"
 gem "will_paginate"
 gem "resque"
 gem "resque_mailer"
+gem "redis-objects", :git => "git://github.com/techbang/redis-objects.git", :ref => "5c3a5e09cffd3c8800f2"
 
 # 图片上传
 #gem "carrierwave"
